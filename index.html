@@ -3150,6 +3150,254 @@ console.log("SENGA KISWAHILI COMMAND CENTRE: IMEANZISHWA.");
 
 })();
 </script>
+<style>
+#sengaModuleApp{position:fixed;inset:0;z-index:999999;background:#101010;color:#f5f5f5;display:none;overflow-y:auto;font-family:Arial,sans-serif}
+#sengaModuleApp *{box-sizing:border-box}
+#sengaModuleApp .sm-wrap{max-width:1100px;margin:auto;padding:18px}
+#sengaModuleApp .sm-head{background:#1b1b1b;border:1px solid #b58b32;padding:18px;border-radius:12px;margin-bottom:15px}
+#sengaModuleApp h2,#sengaModuleApp h3{color:#e5b53c}
+#sengaModuleApp button{background:#b58b32;color:#111;border:0;padding:11px 15px;border-radius:7px;font-weight:bold;cursor:pointer;margin:4px}
+#sengaModuleApp button.secondary{background:#333;color:white}
+#sengaModuleApp input,#sengaModuleApp select,#sengaModuleApp textarea{width:100%;padding:12px;margin:6px 0 12px;background:#202020;color:white;border:1px solid #555;border-radius:6px}
+#sengaModuleApp label{font-size:13px;color:#e5b53c}
+#sengaModuleApp .sm-panel{background:#1b1b1b;border:1px solid #393939;padding:15px;border-radius:10px;margin:12px 0}
+#sengaModuleApp .sm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+#sengaModuleApp .sm-record{background:#242424;padding:12px;border-radius:8px;margin:9px 0;border-left:3px solid #b58b32}
+#sengaModuleApp .sm-close{float:right;background:#8e2929;color:white}
+#sengaModuleApp .sm-muted{color:#aaa;font-size:13px}
+#sengaModuleApp .sm-actions{display:flex;flex-wrap:wrap;gap:5px}
+#sengaModuleApp table{width:100%;border-collapse:collapse}
+#sengaModuleApp td,#sengaModuleApp th{padding:9px;border-bottom:1px solid #444;text-align:left}
+</style>
 
+<div id="sengaModuleApp">
+ <div class="sm-wrap">
+  <div class="sm-head">
+   <button class="sm-close" onclick="SENGA.close()">Funga ×</button>
+   <div style="color:#e5b53c;font-weight:bold">SENGA MANAGEMENT 360</div>
+   <h2 id="smTitle">Usimamizi wa Vitengo</h2>
+   <div id="smDescription" class="sm-muted"></div>
+  </div>
+  <div class="sm-panel">
+   <div class="sm-actions">
+    <button onclick="SENGA.showForm()">+ Rekodi Mpya</button>
+    <button onclick="SENGA.exportData()">Pakua JSON</button>
+    <button class="secondary" onclick="SENGA.showList()">Rekodi Zote</button>
+    <button class="secondary" onclick="SENGA.close()">Rudi Command Centre</button>
+   </div>
+  </div>
+  <div id="smContractShortcut"></div>
+  <div id="smContent"></div>
+ </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const modules=[
+{id:"01",name:"Usimamizi wa Maombi",desc:"Kupokea, kusajili, kuchambua, kuidhinisha na kufuatilia maombi ya huduma za SENGA.",fields:[
+["Namba ya Maombi","text"],["Jina la Mwombaji","text"],["Simu","tel"],["Barua Pepe","email"],["Aina ya Maombi","select","Maonyesho|Huduma|Ushirikiano|Booking|Nyingine"],["Tarehe ya Kupokea","date"],["Maelezo ya Maombi","textarea"],["Afisa Anayeshughulikia","text"],["Hali ya Maombi","select","Jipya|Linafanyiwa Kazi|Linasubiri|Limeidhinishwa|Limekataliwa"]
+]},
+{id:"02",name:"Kalenda ya Maonyesho",desc:"Kupanga maonyesho, tarehe, ratiba, maeneo, washiriki na shughuli za SENGA.",fields:[
+["Jina la Maonyesho","text"],["Namba ya Booking","text"],["Tarehe ya Kuanza","date"],["Tarehe ya Kumaliza","date"],["Muda","text"],["Eneo la Maonyesho","text"],["Mratibu","text"],["Idadi ya Washiriki","number"],["Maelezo ya Ratiba","textarea"],["Hali ya Tukio","select","Imepangwa|Inaendelea|Imekamilika|Imeahirishwa|Imefutwa"]
+]},
+{id:"03",name:"Usimamizi wa Wateja",desc:"Kusajili wateja, taarifa zao, historia ya huduma na mawasiliano.",fields:[
+["Namba ya Mteja","text"],["Jina Kamili","text"],["Simu","tel"],["Barua Pepe","email"],["Anuani","textarea"],["Aina ya Mteja","select","Mtu Binafsi|Kampuni|Taasisi|Serikali|Nyingine"],["Huduma Anayohitaji","textarea"],["Tarehe ya Usajili","date"],["Maelezo ya Ziada","textarea"]
+]},
+{id:"04",name:"Uratibu wa Safari",desc:"Kuratibu safari, wasafiri, njia, usafiri, ratiba na taarifa za safari.",fields:[
+["Namba ya Safari","text"],["Jina la Msafiri","text"],["Mahali pa Kuanzia","text"],["Mahali pa Kwenda","text"],["Tarehe ya Safari","date"],["Muda wa Safari","text"],["Aina ya Usafiri","select","Gari|Ndege|Treni|Basi|Nyingine"],["Mratibu wa Safari","text"],["Gharama","number"],["Hali ya Safari","select","Imepangwa|Imethibitishwa|Inaendelea|Imekamilika|Imeghairiwa"]
+]},
+{id:"05",name:"Ramani ya Maeneo",desc:"Kusajili na kusimamia maeneo ya maonyesho, venue, anuani na taarifa za kijiografia.",fields:[
+["Jina la Eneo","text"],["Mkoa","text"],["Wilaya","text"],["Kata","text"],["Anuani Kamili","textarea"],["Latitude","number"],["Longitude","number"],["Uwezo wa Eneo","number"],["Mawasiliano ya Eneo","text"],["Maelezo","textarea"]
+]},
+{id:"06",name:"Makadirio ya Gharama",desc:"Kuandaa bajeti, makadirio, gharama halisi na kulinganisha matumizi.",fields:[
+["Namba ya Makadirio","text"],["Jina la Shughuli","text"],["Mteja/Booking","text"],["Usafiri","number"],["Malazi","number"],["Ukumbi/Eneo","number"],["Vifaa","number"],["Watumishi","number"],["Gharama Nyingine","number"],["Tarehe ya Makadirio","date"],["Maelezo","textarea"]
+]},
+{id:"07",name:"Usimamizi wa Malipo",desc:"Kurekodi malipo, ankara, risiti, salio na uthibitisho wa miamala.",fields:[
+["Namba ya Malipo","text"],["Namba ya Booking","text"],["Jina la Mlipaji","text"],["Kiasi","number"],["Tarehe ya Malipo","date"],["Njia ya Malipo","select","Benki|M-Pesa|Tigo Pesa|Airtel Money|Taslimu|Nyingine"],["Namba ya Muamala","text"],["Aina ya Malipo","select","Amana|Malipo Kamili|Malipo ya Ziada|Marejesho"],["Hali ya Malipo","select","Inasubiri|Imelipwa|Imethibitishwa|Imekataliwa"],["Maelezo","textarea"]
+]},
+{id:"08",name:"Legal 360",desc:"Usimamizi wa masuala ya kisheria, wajibu, masharti, ufuatiliaji na kumbukumbu za kisheria.",fields:[
+["Namba ya Kesi/Marejeo","text"],["Aina ya Suala","select","Ushauri wa Kisheria|Mgogoro|Uzingatiaji|Mkataba|Haki|Nyingine"],["Wahusika","text"],["Maelezo ya Suala","textarea"],["Mwanasheria/Msimamizi","text"],["Tarehe ya Kuanza","date"],["Tarehe ya Mwisho","date"],["Hatua Zilizochukuliwa","textarea"],["Hali ya Suala","select","Jipya|Linafuatiliwa|Limefungwa|Linasubiri"]
+]},
+{id:"09",name:"Haki za Ubunifu",desc:"Kusimamia hakimiliki, kazi za ubunifu, ruhusa, matumizi na umiliki wa kazi.",fields:[
+["Namba ya Kumbukumbu","text"],["Jina la Kazi","text"],["Aina ya Kazi","select","Picha|Video|Muziki|Nembo|Maandishi|Ubunifu Mwingine"],["Mmiliki wa Haki","text"],["Tarehe ya Usajili","date"],["Aina ya Ruhusa","text"],["Muda wa Ruhusa","text"],["Mtu/Taasisi Inayotumia","text"],["Maelezo ya Haki","textarea"],["Hali","select","Inatumika|Inasubiri|Imeisha|Imesitishwa"]
+]},
+{id:"10",name:"Mawasiliano",desc:"Kurekodi barua, simu, ujumbe, matangazo na mawasiliano rasmi.",fields:[
+["Namba ya Mawasiliano","text"],["Tarehe","date"],["Aina","select","Barua|Simu|Barua Pepe|WhatsApp|Mkutano|Tangazo"],["Mhusika/Mpokeaji","text"],["Mada","text"],["Maudhui/Muhtasari","textarea"],["Aliyeshughulikia","text"],["Hatua Inayofuata","textarea"],["Hali","select","Imepokelewa|Imejibiwa|Inasubiri|Imekamilika"]
+]},
+{id:"11",name:"Usimamizi wa Matukio",desc:"Kupanga, kutekeleza na kufuatilia matukio ya SENGA.",fields:[
+["Namba ya Tukio","text"],["Jina la Tukio","text"],["Aina ya Tukio","text"],["Tarehe","date"],["Mahali","text"],["Mratibu","text"],["Washiriki","number"],["Bajeti","number"],["Ratiba na Majukumu","textarea"],["Hali ya Tukio","select","Imepangwa|Inaendelea|Imekamilika|Imeahirishwa"]
+]},
+{id:"12",name:"Daftari la Kazi",desc:"Kugawa kazi, kuweka wahusika, tarehe za mwisho na kufuatilia utekelezaji.",fields:[
+["Namba ya Kazi","text"],["Jina la Kazi","text"],["Maelezo ya Kazi","textarea"],["Aliyekabidhiwa","text"],["Tarehe ya Kuanza","date"],["Tarehe ya Mwisho","date"],["Kipaumbele","select","Juu|Wastani|Chini"],["Hali ya Kazi","select","Haijaanza|Inaendelea|Imesimamishwa|Imekamilika"],["Maoni","textarea"]
+]},
+{id:"13",name:"Takwimu za Shughuli",desc:"Kukusanya na kuchambua takwimu za shughuli, mahudhurio, matokeo na viashiria.",fields:[
+["Jina la Shughuli","text"],["Kipindi","text"],["Tarehe ya Takwimu","date"],["Idadi ya Wateja","number"],["Idadi ya Maonyesho","number"],["Idadi ya Washiriki","number"],["Mapato","number"],["Matumizi","number"],["Matokeo Muhimu","textarea"],["Maelezo","textarea"]
+]},
+{id:"14",name:"Nyaraka na Ripoti",desc:"Kusajili nyaraka, ripoti, marejeo, tarehe na mahali pa kuhifadhi.",fields:[
+["Namba ya Nyaraka","text"],["Jina la Nyaraka/Ripoti","text"],["Aina","select","Ripoti|Mkataba|Barua|Fomu|Risiti|Nyingine"],["Tarehe","date"],["Idara/Mhusika","text"],["Maelezo","textarea"],["Mahali pa Faili/URL","text"],["Hali","select","Rasimu|Imekamilika|Imeidhinishwa|Imehifadhiwa"]
+]},
+{id:"15",name:"Usimamizi wa Washirikiano",desc:"Kusajili washirikiano, taasisi, mawasiliano, majukumu na historia ya ushirikiano.",fields:[
+["Namba ya Mshirikiano","text"],["Jina la Mshirikiano/Taasisi","text"],["Aina ya Ushirikiano","select","Taasisi|Kampuni|Serikali|NGO|Mtu Binafsi|Nyingine"],["Mwakilishi","text"],["Simu","tel"],["Barua Pepe","email"],["Aina ya Ushirikiano","textarea"],["Tarehe ya Kuanza","date"],["Tarehe ya Mwisho","date"],["Hali","select","Hai|Unasubiri|Umeisha|Umesitishwa"]
+]},
+{id:"16",name:"Usalama wa Taarifa",desc:"Kusimamia watumiaji, ruhusa, kumbukumbu za ukaguzi na matukio ya usalama.",fields:[
+["Namba ya Tukio","text"],["Jina la Mtumiaji","text"],["Aina ya Tukio","select","Kuingia|Kutoka|Jaribio la Ufikiaji|Mabadiliko ya Taarifa|Tukio la Usalama"],["Tarehe na Muda","text"],["Kiwango cha Hatari","select","Juu|Wastani|Chini"],["Maelezo","textarea"],["Hatua za Usalama","textarea"],["Hali","select","Jipya|Linachunguzwa|Limetatuliwa"]
+]}
+];
+
+const contracts={
+id:"CONTRACTS",
+name:"Legal 360 – Usimamizi wa Mikataba",
+desc:"Kuandaa na kufuatilia mikataba ya maonyesho, booking na makubaliano ya kibiashara.",
+fields:[
+["Namba ya Mkataba","text"],["Namba ya Booking","text"],["Jina la Mteja","text"],["Aina ya Mkataba","select","Mkataba wa Maonyesho|Mkataba wa Booking|Mkataba wa Ushirikiano|Mkataba wa Huduma|Nyingine"],["Eneo la Maonyesho","text"],["Tarehe ya Mkataba","date"],["Tarehe ya Kuanza","date"],["Tarehe ya Kumalizika","date"],["Kiasi Kilichokubaliwa","number"],["Masharti ya Mkataba","textarea"],["Wajibu wa SENGA","textarea"],["Wajibu wa Mteja","textarea"],["Hali ya Mkataba","select","Rasimu|Unasubiri Saini|Umesainiwa|Unaendelea|Umemalizika|Umefutwa"]
+]};
+
+let current=modules[0];
+let editing=null;
+
+function storageKey(){
+ return "SENGA_MANAGEMENT_"+current.id;
+}
+function getRecords(){
+ try{return JSON.parse(localStorage.getItem(storageKey())||"[]")}
+ catch(e){return []}
+}
+function saveRecords(data){
+ localStorage.setItem(storageKey(),JSON.stringify(data));
+}
+
+function open(id){
+ current=id==="CONTRACTS"?contracts:modules.find(m=>m.id===id);
+ if(!current)return;
+ editing=null;
+ document.getElementById("sengaModuleApp").style.display="block";
+ document.getElementById("smTitle").textContent=current.id==="CONTRACTS"?current.name:current.id+" – "+current.name;
+ document.getElementById("smDescription").textContent=current.desc;
+ document.getElementById("smContractShortcut").innerHTML=
+ current.id==="08"?'<div class="sm-panel"><h3>Huduma ya Mikataba</h3><p>Usimamizi tofauti wa mikataba ya maonyesho na booking.</p><button onclick="SENGA.openContracts()">Fungua Usimamizi wa Mikataba</button></div>':"";
+ showList();
+}
+function close(){
+ document.getElementById("sengaModuleApp").style.display="none";
+}
+function showForm(record){
+ editing=record?record._id:null;
+ let html='<div class="sm-panel"><h3>'+(record?"Hariri Rekodi":"Sajili Rekodi Mpya")+'</h3><form id="smForm"><div class="sm-grid">';
+ current.fields.forEach((f,i)=>{
+ let val=record?(record["f"+i]||""):"";
+ html+='<div><label>'+f[0]+'</label>';
+ if(f[1]==="textarea"){
+ html+='<textarea name="f'+i+'">'+escapeHTML(val)+'</textarea>';
+ }else if(f[1]==="select"){
+ html+='<select name="f'+i+'"><option value="">Chagua</option>';
+ f[2].split("|").forEach(o=>html+='<option '+(val===o?"selected":"")+'>'+o+'</option>');
+ html+='</select>';
+ }else{
+ html+='<input name="f'+i+'" type="'+f[1]+'" value="'+escapeAttr(val)+'">';
+ }
+ html+='</div>';
+ });
+ html+='</div><button type="submit">Hifadhi Rekodi</button><button type="button" class="secondary" onclick="SENGA.showList()">Ghairi</button></form></div>';
+ document.getElementById("smContent").innerHTML=html;
+ document.getElementById("smForm").onsubmit=function(e){
+ e.preventDefault();
+ let data=Object.fromEntries(new FormData(this).entries());
+ let records=getRecords();
+ if(editing){
+ let index=records.findIndex(r=>r._id===editing);
+ if(index>=0)records[index]={...records[index],...data,updatedAt:new Date().toISOString()};
+ }else{
+ records.unshift({...data,_id:"SG-"+Date.now(),createdAt:new Date().toISOString()});
+ }
+ saveRecords(records);
+ editing=null;
+ showList();
+ };
+}
+function showList(){
+ editing=null;
+ let records=getRecords();
+ let html='<div class="sm-panel"><h3>Rekodi za '+current.name+'</h3>';
+ html+='<input id="smSearch" placeholder="Tafuta rekodi..." oninput="SENGA.filterRecords()">';
+ html+='<div id="smRecords">';
+ if(!records.length)html+='<p class="sm-muted">Bado hakuna rekodi. Bonyeza Rekodi Mpya kuanza.</p>';
+ html+=renderRecords(records);
+ html+='</div></div>';
+ document.getElementById("smContent").innerHTML=html;
+}
+function renderRecords(records){
+ if(!records.length)return "";
+ return records.map(r=>{
+ let title=r.f0||r.f1||r._id;
+ let detail=current.fields.map((f,i)=>r["f"+i]?'<div><b>'+escapeHTML(f[0])+':</b> '+escapeHTML(r["f"+i])+'</div>':"").join("");
+ return '<div class="sm-record"><b>'+escapeHTML(title)+'</b><div class="sm-muted">'+escapeHTML(r._id)+'</div><details><summary>Angalia maelezo</summary>'+detail+'</details><div class="sm-actions"><button onclick="SENGA.editRecord(\''+r._id+'\')">Hariri</button><button onclick="SENGA.deleteRecord(\''+r._id+'\')">Futa</button></div></div>';
+ }).join("");
+}
+function filterRecords(){
+ let q=(document.getElementById("smSearch").value||"").toLowerCase();
+ let records=getRecords().filter(r=>JSON.stringify(r).toLowerCase().includes(q));
+ document.getElementById("smRecords").innerHTML=renderRecords(records)||'<p>Hakuna rekodi zinazolingana.</p>';
+}
+function editRecord(id){
+ let record=getRecords().find(r=>r._id===id);
+ if(record)showForm(record);
+}
+function deleteRecord(id){
+ if(!confirm("Una uhakika unataka kufuta rekodi hii?"))return;
+ saveRecords(getRecords().filter(r=>r._id!==id));
+ showList();
+}
+function exportData(){
+ let data=getRecords();
+ let blob=new Blob([JSON.stringify({module:current.name,exportedAt:new Date().toISOString(),records:data},null,2)],{type:"application/json"});
+ download(blob,"SENGA_"+current.id+"_records.json");
+}
+function download(blob,name){
+ let url=URL.createObjectURL(blob);
+ let a=document.createElement("a");
+ a.href=url;a.download=name;a.click();
+ URL.revokeObjectURL(url);
+}
+function escapeHTML(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function escapeAttr(s){return escapeHTML(s).replace(/"/g,"&quot;");}
+
+/* Kutambua kitengo kilichobofwa kwenye Command Centre */
+document.addEventListener("click",function(e){
+ if(e.target.closest("#sengaModuleApp"))return;
+ let path=e.composedPath?e.composedPath():[e.target];
+ for(let node of path){
+  if(!(node instanceof HTMLElement))continue;
+  if(node.id==="sengaModuleApp"||node===document.body)break;
+  let explicit=node.getAttribute("data-module");
+  if(explicit){
+   let found=modules.find(m=>m.id===explicit||m.id===explicit.replace(/^0/,""));
+   if(found){e.preventDefault();e.stopPropagation();open(found.id);return;}
+  }
+  let txt=(node.innerText||node.textContent||"").trim();
+  if(!txt||txt.length>500)continue;
+  let found=modules.find(m=>{
+   let clean=txt.toLowerCase();
+   return clean.includes(m.name.toLowerCase()) ||
+    (clean.includes(m.id) && clean.includes(m.name.toLowerCase()));
+  });
+  if(found){
+   e.preventDefault();e.stopPropagation();open(found.id);return;
+  }
+ }
+},true);
+
+window.SENGA={
+ open,close,
+ showForm:()=>showForm(),
+ showList,filterRecords,editRecord,deleteRecord,exportData,
+ openContracts:()=>open("CONTRACTS")
+};
+
+})();
+</script>
 </body>
 </html>
