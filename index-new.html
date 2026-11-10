@@ -1,112 +1,3155 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101010">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
 
-  <title>SENGA | Daktari wa Kutibu Stress</title>
+<title>SENGA | Daktari wa Kutibu Stress</title>
 
-  <meta name="description" content="SENGA - Mfumo wa huduma na usaidizi kwa watumiaji Tanzania.">
+<style>
+:root {
+  --gold:#e5b53c;
+  --dark:#101010;
+  --panel:#1b1b1b;
+  --muted:#aaa;
+  --white:#f5f5f5;
+  --border:#383838;
+  --green:#00a878;
+  --red:#d94b4b;
+}
 
-  <style>
-    :root {
-      --gold: #e5b53c;
-      --dark: #101010;
-      --panel: #1b1b1b;
-      --muted: #a5a5a5;
-      --white: #ffffff;
-      --border: #333333;
-    }
+* {box-sizing:border-box}
 
-    * {
-      box-sizing: border-box;
-    }
+body {
+  margin:0;
+  background:var(--dark);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+button,input,select,textarea {font:inherit}
 
-    body {
-      margin: 0;
-      background: var(--dark);
-      color: var(--white);
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-    }
+button {cursor:pointer}
 
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
+header.main-header {
+  background:#090909;
+  border-bottom:2px solid var(--gold);
+  padding:14px 18px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
 
-    button {
-      cursor: pointer;
-    }
+.header-inner {
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
 
-    .container {
-      width: min(1100px, 92%);
-      margin: auto;
-    }
+.brand {
+  color:var(--gold);
+  font-size:25px;
+  font-weight:bold;
+  letter-spacing:3px;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.brand small {
+  display:block;
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:1px;
+  margin-top:4px;
+}
 
-    header,
-    main,
-    footer {
-      width: 100%;
-    }
+nav {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
 
-    header {
-      background: var(--panel);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 0;
-    }
+nav a {
+  color:#eee;
+  text-decoration:none;
+  font-size:12px;
+  padding:9px;
+}
 
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-      text-align: center;
-      color: var(--muted);
-    }
-  </style>
+nav a:hover {color:var(--gold)}
+
+.hero {
+  min-height:480px;
+  display:flex;
+  align-items:center;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.48)),
+   url("senga-homepage.jpg") center 30%/cover no-repeat;
+  border-bottom:1px solid var(--gold);
+}
+
+.hero-inner {
+  width:100%;
+  max-width:1200px;
+  padding:55px 22px;
+  margin:auto;
+}
+
+.hero h1 {
+  font-size:clamp(38px,7vw,76px);
+  color:var(--gold);
+  margin:10px 0;
+  max-width:750px;
+}
+
+.hero p {
+  font-size:18px;
+  line-height:1.7;
+  max-width:650px;
+  color:#eee;
+}
+
+.eyebrow {
+  color:var(--gold);
+  letter-spacing:3px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.btn {
+  display:inline-block;
+  border:0;
+  border-radius:5px;
+  padding:12px 18px;
+  margin:5px 4px 5px 0;
+  background:var(--gold);
+  color:#111;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.btn.secondary {
+  background:#333;
+  border:1px solid #666;
+  color:white;
+}
+
+.btn.danger {
+  background:#8d2828;
+  color:white;
+}
+
+.container {
+  max-width:1200px;
+  margin:auto;
+  padding:35px 18px;
+}
+
+.section-title {
+  color:var(--gold);
+  font-size:26px;
+  border-bottom:1px solid #444;
+  padding-bottom:12px;
+  margin-bottom:22px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+.card h3 {color:var(--gold)}
+
+.card p {
+  color:#ccc;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.metric {
+  font-size:28px;
+  color:var(--gold);
+  font-weight:bold;
+}
+
+label {
+  display:block;
+  color:var(--gold);
+  font-size:13px;
+  margin:12px 0 6px;
+}
+
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  background:#101010;
+  color:white;
+  border:1px solid #555;
+  border-radius:5px;
+}
+
+textarea {
+  min-height:90px;
+  resize:vertical;
+}
+
+.form-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+
+.full {grid-column:1/-1}
+
+.table-wrap {
+  overflow-x:auto;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th,td {
+  border-bottom:1px solid #444;
+  padding:12px;
+  text-align:left;
+  font-size:12px;
+}
+
+th {color:var(--gold)}
+
+.badge {
+  color:var(--gold);
+  font-weight:bold;
+}
+
+.notice {
+  color:#aaa;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.hidden {display:none!important}
+
+.module-number {
+  font-size:12px;
+  color:var(--gold);
+  letter-spacing:2px;
+}
+
+footer {
+  border-top:2px solid var(--gold);
+  padding:30px 18px;
+  background:#080808;
+  color:#aaa;
+  text-align:center;
+  line-height:1.8;
+}
+
+.whatsapp {
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:200;
+  background:#128c50;
+  color:white;
+  border-radius:30px;
+  padding:14px 18px;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 4px 15px #000;
+}
+
+@media(max-width:800px) {
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .header-inner {align-items:flex-start;flex-direction:column}
+  nav {max-width:100%}
+}
+
+@media(max-width:550px) {
+  .grid,.form-grid {grid-template-columns:1fr}
+  .hero {min-height:420px}
+  .container {padding:25px 13px}
+  .brand {font-size:22px}
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="container">
-      <h1>SENGA</h1>
-      <p>Daktari wa Kutibu Stress</p>
+<header class="main-header">
+  <div class="header-inner">
+
+    <div class="brand">
+      SENGA
+      <small>DAKTARI WA KUTIBU STRESS</small>
     </div>
-  </header>
 
-  <main id="mainContent">
-    <div class="container">
+    <nav>
+      <a href="#nyumbani">Nyumbani</a>
+      <a href="#huduma">Huduma</a>
+      <a href="#booking">Miadi</a>
+      <a href="#maeneo">Maeneo</a>
+      <a href="#dashibodi">Dashibodi</a>
+      <a href="#legal360">LEGAL360</a>
+    </nav>
 
-      <!-- MODULES WILL BE INTEGRATED HERE -->
+  </div>
+</header>
 
+<!-- NYUMBANI -->
+
+<section class="hero" id="nyumbani">
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      SENGA DIGITAL BRAND COMMAND CENTRE
     </div>
-  </main>
 
-  <footer>
-    <div class="container">
-      <p>SENGA | Mfumo wa Huduma za Kidijitali</p>
+    <h1>BURUDANI YENYE KUMBUKUMBU</h1>
+
+    <p>
+      Karibu kwenye mfumo rasmi wa kidijitali wa Senga.
+      Mfumo wa kuratibu maonyesho, maombi ya huduma,
+      makubaliano ya kazi na usimamizi wa shughuli za kisanii.
+    </p>
+
+    <a class="btn" href="#booking">OMBA HUDUMA</a>
+    <a class="btn secondary" href="#huduma">TAZAMA HUDUMA</a>
+
+    <p class="notice">
+      Senga — Ulimboka Anangisye.
+      Daktari wa Kutibu Stress.
+    </p>
+
+  </div>
+</section>
+
+<!-- DASHIBODI YA MUHTASARI -->
+
+<section class="container" id="dashibodi">
+
+  <h2 class="section-title">Kituo Kikuu cha Usimamizi</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="module-number">01</div>
+      <h3>Maombi ya Huduma</h3>
+      <div class="metric" id="totalBookings">0</div>
+      <p>Jumla ya maombi yaliyosajiliwa.</p>
     </div>
-  </footer>
 
-  <script>
-    "use strict";
+    <div class="card">
+      <div class="module-number">02</div>
+      <h3>Mikataba</h3>
+      <div class="metric" id="totalContracts">0</div>
+      <p>Jumla ya mikataba ya LEGAL360.</p>
+    </div>
 
-    // CENTRAL APPLICATION INITIALIZATION
-    document.addEventListener("DOMContentLoaded", function () {
-      console.log("SENGA application initialized.");
+    <div class="card">
+      <div class="module-number">03</div>
+      <h3>Mapato Yanayotarajiwa</h3>
+      <div class="metric" id="totalRevenue">TZS 0</div>
+      <p>Jumla ya ada za maombi yaliyosajiliwa.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- HUDUMA -->
+
+<section class="container" id="huduma">
+
+  <h2 class="section-title">Huduma na Shughuli za Senga</h2>
+
+  <div class="grid" id="serviceGrid"></div>
+
+</section>
+
+<!-- MAOMBI YA HUDUMA -->
+
+<section class="container" id="booking">
+
+  <h2 class="section-title">Usajili wa Ombi la Huduma</h2>
+
+  <div class="card">
+
+    <form id="bookingForm">
+
+      <div class="form-grid">
+
+        <div>
+          <label>Namba ya Ombi</label>
+          <input id="bookingRef" readonly>
+        </div>
+
+        <div>
+          <label>Jina la Mteja / Taasisi</label>
+          <input id="bookingClient" required>
+        </div>
+
+        <div>
+          <label>Namba ya Simu</label>
+          <input id="bookingPhone" type="tel" required>
+        </div>
+
+        <div>
+          <label>Barua Pepe</label>
+          <input id="bookingEmail" type="email">
+        </div>
+
+        <div>
+          <label>Aina ya Huduma</label>
+          <select id="bookingService" required>
+            <option value="">Chagua huduma</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Jina la Tukio</label>
+          <input id="bookingEvent" required>
+        </div>
+
+        <div>
+          <label>Mkoa wa Tukio</label>
+          <select id="bookingRegion" required>
+            <option value="">Chagua mkoa</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Mji / Eneo la Tukio</label>
+          <select id="bookingTown" required>
+            <option value="">Chagua mji</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Tarehe ya Tukio</label>
+          <input id="bookingDate" type="date" required>
+        </div>
+
+        <div>
+          <label>Muda wa Tukio</label>
+          <input id="bookingTime" type="time">
+        </div>
+
+        <div>
+          <label>Mahali pa Kuanzia Safari</label>
+          <select id="bookingOrigin">
+            <option value="Dar es Salaam">Dar es Salaam</option>
+            <option value="Mkoa mwingine">Mkoa mwingine</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Umbali wa Safari (KM)</label>
+          <input id="bookingDistance" type="number" min="0"
+            placeholder="Ingiza umbali uliothibitishwa">
+        </div>
+
+        <div>
+          <label>Ada ya Huduma (TZS)</label>
+          <input id="bookingFee" type="number" min="0" required>
+        </div>
+
+        <div>
+          <label>Gharama ya Usafiri (TZS)</label>
+          <input id="bookingTransport" type="number" min="0">
+        </div>
+
+        <div>
+          <label>Aina ya Safari</label>
+          <select id="bookingTravel">
+            <option value="Safari ya barabara">Safari ya barabara</option>
+            <option value="Safari ya ndege">Safari ya ndege</option>
+            <option value="Feri kwenda Zanzibar">Feri kwenda Zanzibar</option>
+            <option value="Ndege kwenda Zanzibar">Ndege kwenda Zanzibar</option>
+            <option value="Usafiri mwingine">Usafiri mwingine</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Malazi Yanahitajika?</label>
+          <select id="bookingAccommodation">
+            <option>Hapana</option>
+            <option>Ndiyo</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label>Maelezo ya Ziada</label>
+          <textarea id="bookingNotes"
+            placeholder="Eleza mahitaji ya tukio, idadi ya watu na maelezo mengine..."></textarea>
+        </div>
+
+      </div>
+
+      <button type="submit" class="btn">
+        HIFADHI OMBI
+      </button>
+
+      <button type="button" class="btn secondary"
+        onclick="resetBooking()">
+        FUTA FOMU
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+<!-- MAENEO -->
+
+<section class="container" id="maeneo">
+
+  <h2 class="section-title">
+    Mikoa 31 ya Tanzania na Maeneo ya Huduma
+  </h2>
+
+  <div class="card">
+
+    <p>
+      Chagua mkoa ili kuona miji na maeneo makuu
+      yanayotumika katika uratibu wa maonyesho.
+    </p>
+
+    <label>Mkoa</label>
+    <select id="regionExplorer">
+      <option value="">Chagua mkoa</option>
+    </select>
+
+    <label>Miji na Maeneo</label>
+    <select id="townExplorer">
+      <option value="">Chagua eneo</option>
+    </select>
+
+    <p id="regionInfo" class="notice">
+      Taarifa za eneo zitaonekana hapa.
+    </p>
+
+  </div>
+
+  <div class="card">
+    <h3>Uratibu wa Safari</h3>
+    <p>
+      Dar es Salaam imetumika kama sehemu ya kawaida ya
+      kuanzia safari. Umbali hutegemea mji, njia ya safari
+      na hali halisi ya usafiri.
+    </p>
+    <p class="notice">
+      Umbali hauwekwi kama kipimo rasmi bila kuthibitishwa
+      kwa njia husika. Kwa Zanzibar, gharama na muda wa
+      feri au ndege vinapaswa kuthibitishwa tofauti.
+    </p>
+  </div>
+
+</section>
+
+<!-- REGISTER YA BOOKING -->
+
+<section class="container">
+
+  <h2 class="section-title">Daftari la Maombi ya Huduma</h2>
+
+  <div class="card">
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Namba</th>
+            <th>Mteja</th>
+            <th>Huduma</th>
+            <th>Eneo</th>
+            <th>Tarehe</th>
+            <th>Ada</th>
+            <th>Hali</th>
+            <th>Vitendo</th>
+          </tr>
+        </thead>
+
+        <tbody id="bookingRecords"></tbody>
+      </table>
+    </div>
+
+    <button class="btn secondary" onclick="exportBackup()">
+      PAKUA NAKALA YA TAARIFA
+    </button>
+
+    <button class="btn secondary" onclick="exportCSV()">
+      PAKUA DAFTARI LA CSV
+    </button>
+
+  </div>
+
+</section>
+
+<!-- MODULES -->
+
+<section class="container">
+
+  <h2 class="section-title">
+    Vitengo 16 vya Usimamizi wa Senga
+  </h2>
+
+  <div class="grid" id="moduleGrid"></div>
+
+</section>
+
+<!-- LEGAL360 -->
+
+<section id="legal360" class="container">
+
+  <h2 class="section-title">LEGAL360 — Usimamizi wa Mikataba</h2>
+
+  <div class="card">
+
+    <h3>01. Kuandaa Mkataba wa Maonyesho</h3>
+
+    <form id="legal360Form">
+
+      <div class="form-grid">
+
+        <div>
+          <label>Namba ya Mkataba</label>
+          <input id="l360Reference" readonly>
+        </div>
+
+        <div>
+          <label>Namba ya Booking</label>
+          <input id="l360Booking">
+        </div>
+
+        <div>
+          <label>Mteja / Taasisi</label>
+          <input id="l360Client" required>
+        </div>
+
+        <div>
+          <label>Simu ya Mteja</label>
+          <input id="l360Phone">
+        </div>
+
+        <div>
+          <label>Barua Pepe</label>
+          <input id="l360Email" type="email">
+        </div>
+
+        <div>
+          <label>Jina la Tukio</label>
+          <input id="l360Event" required>
+        </div>
+
+        <div>
+          <label>Eneo la Tukio</label>
+          <input id="l360Location" required>
+        </div>
+
+        <div>
+          <label>Tarehe ya Maonyesho</label>
+          <input id="l360Date" type="date" required>
+        </div>
+
+        <div>
+          <label>Muda wa Maonyesho</label>
+          <input id="l360Duration" placeholder="Mfano: Dakika 60">
+        </div>
+
+        <div>
+          <label>Ada ya Maonyesho (TZS)</label>
+          <input id="l360Fee" type="number" min="0" required>
+        </div>
+
+        <div>
+          <label>Malipo ya Awali (TZS)</label>
+          <input id="l360Deposit" type="number" min="0">
+        </div>
+
+        <div>
+          <label>Tarehe ya Mwisho ya Malipo</label>
+          <input id="l360PaymentDate" type="date">
+        </div>
+
+      </div>
+
+      <h3>02. Masharti ya Mkataba</h3>
+
+      <label>Wajibu wa Senga</label>
+      <textarea id="l360Obligations"></textarea>
+
+      <label>Wajibu wa Mteja</label>
+      <textarea id="l360ClientObligations"></textarea>
+
+      <label>Usitishaji na Kuahirisha Tukio</label>
+      <textarea id="l360Cancellation"></textarea>
+
+      <label>Upigaji Picha, Kurekodi na Haki za Ubunifu</label>
+      <textarea id="l360Rights"></textarea>
+
+      <label>Mazingira Yasiyozuilika (Force Majeure)</label>
+      <textarea id="l360Force"></textarea>
+
+      <label>Utatuzi wa Migogoro na Sheria Inayotumika</label>
+      <textarea id="l360Disputes"></textarea>
+
+      <label>Masharti ya Ziada</label>
+      <textarea id="l360Additional"></textarea>
+
+      <label>Hali ya Mkataba</label>
+      <select id="l360Status">
+        <option>Rasimu</option>
+        <option>Imetumwa kwa Mapitio</option>
+        <option>Inasubiri Saini</option>
+        <option>Imesainiwa</option>
+        <option>Unaendelea</option>
+        <option>Umekamilika</option>
+        <option>Umefutwa</option>
+      </select>
+
+      <button type="submit" class="btn">
+        HIFADHI MKATABA
+      </button>
+
+      <button type="button" class="btn secondary"
+        onclick="legal360Reset()">
+        FUTA FOMU
+      </button>
+
+    </form>
+
+  </div>
+
+  <div class="card">
+
+    <h3>03. Daftari la Mikataba</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Namba</th>
+            <th>Mteja</th>
+            <th>Tukio</th>
+            <th>Tarehe</th>
+            <th>Ada</th>
+            <th>Hali</th>
+            <th>Vitendo</th>
+          </tr>
+        </thead>
+
+        <tbody id="legal360Records"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <p class="notice">
+    LEGAL360 ni mfumo wa kiutawala wa kuandaa na kuhifadhi
+    mikataba. Mkataba unapaswa kupitiwa na mtaalamu wa sheria
+    kabla ya kusainiwa. Mfumo huu hauhakikishi utambulisho
+    wa wahusika wala uhalali wa saini za kielektroniki.
+  </p>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+  <h2 style="color:#e5b53c">SENGA</h2>
+
+  <p>
+    Daktari wa Kutibu Stress
+  </p>
+
+  <p>
+    Mfumo wa Kidijitali wa Usimamizi wa Shughuli za Kisanii
+  </p>
+
+  <p>
+    Imetengenezwa na AAMush Technologies Tanzania Ltd.
+    <br>
+    Strategic Architect: Dr. James K. Mushi, PhD.
+  </p>
+
+  <p class="notice">
+    © <span id="currentYear"></span>
+    SENGA Digital Brand Command Centre.
+    Haki zote zimehifadhiwa.
+  </p>
+
+</footer>
+
+<a class="whatsapp"
+   href="https://wa.me/?text=Habari%20Senga%2C%20naomba%20taarifa%20za%20huduma."
+   target="_blank" rel="noopener">
+  WHATSAPP
+</a>
+
+<script>
+(function() {
+"use strict";
+
+// ========================================
+// 1. HIFADHI YA TAARIFA
+// ========================================
+
+const BOOKING_KEY = "SENGA_SW_BOOKINGS";
+const LEGAL_KEY = "SENGA_SW_LEGAL360";
+
+let bookings = [];
+let contracts = [];
+let editingBooking = null;
+let editingContract = null;
+
+function loadData(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "[]");
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveData(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+    return true;
+  } catch(e) {
+    alert("Imeshindikana kuhifadhi taarifa. Angalia nafasi ya browser.");
+    return false;
+  }
+}
+
+bookings = loadData(BOOKING_KEY);
+contracts = loadData(LEGAL_KEY);
+
+// ========================================
+// 2. HUDUMA 16
+// ========================================
+
+const services = [
+  "Maonyesho ya Moja kwa Moja",
+  "Burudani za Sherehe",
+  "Matukio ya Kampuni",
+  "Matukio ya Serikali na Taasisi",
+  "Sherehe za Harusi",
+  "Sherehe za Familia",
+  "Matamasha",
+  "Maonyesho ya Kijamii",
+  "Vipindi vya Televisheni",
+  "Vipindi vya Redio",
+  "Filamu na Tamthilia",
+  "Matangazo ya Biashara",
+  "Ushirikiano wa Kibiashara",
+  "Matukio ya Kimataifa",
+  "Ushauri wa Sanaa na Ubunifu",
+  "Huduma Maalumu"
+];
+
+const modules = [
+  "Usimamizi wa Maombi",
+  "Kalenda ya Maonyesho",
+  "Usimamizi wa Wateja",
+  "Uratibu wa Safari",
+  "Ramani ya Maeneo",
+  "Makadirio ya Gharama",
+  "Usimamizi wa Malipo",
+  "LEGAL360",
+  "Haki za Ubunifu",
+  "Mawasiliano",
+  "Usimamizi wa Matukio",
+  "Daftari la Kazi",
+  "Takwimu za Shughuli",
+  "Nyaraka na Ripoti",
+  "Usimamizi wa Ushirikiano",
+  "Usalama wa Taarifa"
+];
+
+function displayServices() {
+  const container = document.getElementById("serviceGrid");
+
+  container.innerHTML = services.map((service, index) => `
+    <div class="card">
+      <div class="module-number">HUDUMA ${(index + 1).toString().padStart(2,"0")}</div>
+      <h3>${escapeHTML(service)}</h3>
+      <button class="btn secondary"
+        onclick="selectService(${index})">
+        CHAGUA HUDUMA
+      </button>
+    </div>
+  `).join("");
+
+  const select = document.getElementById("bookingService");
+
+  select.innerHTML = '<option value="">Chagua huduma</option>' +
+    services.map(s => `<option>${escapeHTML(s)}</option>`).join("");
+}
+
+function displayModules() {
+  document.getElementById("moduleGrid").innerHTML =
+    modules.map((module,index) => `
+      <div class="card">
+        <div class="module-number">KITENGO ${(index+1).toString().padStart(2,"0")}</div>
+        <h3>${escapeHTML(module)}</h3>
+        <p>Kitengo cha uratibu na usimamizi wa shughuli za Senga.</p>
+      </div>
+    `).join("");
+}
+
+window.selectService = function(index) {
+  document.getElementById("bookingService").value = services[index];
+  document.getElementById("booking").scrollIntoView({
+    behavior:"smooth"
+  });
+};
+
+// ========================================
+// 3. MIKOA 31 NA MIJI
+// ========================================
+
+const regions = {
+  "Arusha":["Arusha","Karatu","Monduli","Longido","Meru","Ngorongoro"],
+  "Dar es Salaam":["Ilala","Kinondoni","Temeke","Ubungo","Kigamboni"],
+  "Dodoma":["Dodoma","Kondoa","Mpwapwa","Kongwa","Bahi","Chamwino"],
+  "Geita":["Geita","Chato","Mbogwe","Bukombe","Nyang'hwale"],
+  "Iringa":["Iringa","Mafinga","Kilolo","Mufindi","Ludewa"],
+  "Kagera":["Bukoba","Biharamulo","Ngara","Karagwe","Muleba","Kyerwa"],
+  "Katavi":["Mpanda","Mpimbwe","Mlele","Nsimbo"],
+  "Kigoma":["Kigoma","Kasulu","Uvinza","Kibondo","Kakonko","Buhigwe"],
+  "Kilimanjaro":["Moshi","Hai","Rombo","Same","Mwanga","Siha"],
+  "Lindi":["Lindi","Kilwa","Nachingwea","Liwale","Ruangwa"],
+  "Manyara":["Babati","Mbulu","Hanang","Simanjiro","Kiteto"],
+  "Mara":["Musoma","Tarime","Bunda","Serengeti","Rorya","Butiama"],
+  "Mbeya":["Mbeya","Tukuyu","Mbalizi","Chunya","Rungwe","Kyela"],
+  "Morogoro":["Morogoro","Kilosa","Mikumi","Ifakara","Mahenge","Gairo"],
+  "Mtwara":["Mtwara","Masasi","Newala","Nanyamba","Tandahimba"],
+  "Mwanza":["Mwanza","Sengerema","Misungwi","Kwimba","Magu","Ukerewe"],
+  "Njombe":["Njombe","Makambako","Ludewa","Wanging'ombe","Makete"],
+  "Pwani":["Kibaha","Bagamoyo","Mkuranga","Rufiji","Kisarawe","Mafia"],
+  "Rukwa":["Sumbawanga","Nkasi","Kalambo"],
+  "Ruvuma":["Songea","Mbinga","Tunduru","Namtumbo","Madaba"],
+  "Shinyanga":["Shinyanga","Kahama","Kishapu","Msalala","Ushetu"],
+  "Simiyu":["Bariadi","Maswa","Meatu","Busega","Itilima"],
+  "Singida":["Singida","Manyoni","Iramba","Mkalama","Ikungi"],
+  "Songwe":["Vwawa","Tunduma","Mbozi","Ileje","Momba"],
+  "Tabora":["Tabora","Nzega","Igunga","Sikonge","Urambo","Kaliua"],
+  "Tanga":["Tanga","Korogwe","Muheza","Pangani","Handeni","Lushoto"],
+  "Kaskazini Unguja":["Mkokotoni","Nungwi","Matemwe"],
+  "Kusini Unguja":["Koani","Makunduchi","Jambiani","Paje"],
+  "Mjini Magharibi":["Zanzibar Mjini","Stone Town","Magharibi"],
+  "Kaskazini Pemba":["Wete","Micheweni"],
+  "Kusini Pemba":["Chake Chake","Mkoani"]
+};
+
+function populateRegionSelect(selectId) {
+  const select = document.getElementById(selectId);
+
+  select.innerHTML = '<option value="">Chagua mkoa</option>';
+
+  Object.keys(regions).forEach(region => {
+    const option = document.createElement("option");
+    option.value = region;
+    option.textContent = region;
+    select.appendChild(option);
+  });
+}
+
+function updateTowns(regionId,townId) {
+  const region = document.getElementById(regionId).value;
+  const townSelect = document.getElementById(townId);
+
+  townSelect.innerHTML = '<option value="">Chagua mji</option>';
+
+  if (!regions[region]) return;
+
+  regions[region].forEach(town => {
+    const option = document.createElement("option");
+    option.value = town;
+    option.textContent = town;
+    townSelect.appendChild(option);
+  });
+}
+
+document.getElementById("bookingRegion").addEventListener("change",() => {
+  updateTowns("bookingRegion","bookingTown");
+});
+
+document.getElementById("regionExplorer").addEventListener("change",() => {
+  updateTowns("regionExplorer","townExplorer");
+
+  document.getElementById("regionInfo").textContent =
+    "Mkoa uliochaguliwa: " +
+    document.getElementById("regionExplorer").value;
+});
+
+// ========================================
+// 4. REFERENCE NUMBERS
+// ========================================
+
+function makeReference(prefix) {
+  const now = new Date();
+
+  const date =
+    now.getFullYear() +
+    String(now.getMonth()+1).padStart(2,"0") +
+    String(now.getDate()).padStart(2,"0");
+
+  return prefix + "-" + date + "-" +
+    Math.floor(1000 + Math.random()*9000);
+}
+
+function resetBooking() {
+  document.getElementById("bookingForm").reset();
+  editingBooking = null;
+  document.getElementById("bookingRef").value =
+    makeReference("SENGA-BK");
+}
+
+window.resetBooking = resetBooking;
+
+// ========================================
+// 5. USAJILI WA BOOKING
+// ========================================
+
+document.getElementById("bookingForm")
+.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (!this.reportValidity()) return;
+
+  const fee = Number(document.getElementById("bookingFee").value);
+  const transport = Number(document.getElementById("bookingTransport").value || 0);
+
+  if (fee < 0 || transport < 0) {
+    alert("Tafadhali weka kiasi sahihi cha fedha.");
+    return;
+  }
+
+  const data = {
+    reference:document.getElementById("bookingRef").value,
+    client:document.getElementById("bookingClient").value.trim(),
+    phone:document.getElementById("bookingPhone").value.trim(),
+    email:document.getElementById("bookingEmail").value.trim(),
+    service:document.getElementById("bookingService").value,
+    event:document.getElementById("bookingEvent").value.trim(),
+    region:document.getElementById("bookingRegion").value,
+    town:document.getElementById("bookingTown").value,
+    date:document.getElementById("bookingDate").value,
+    time:document.getElementById("bookingTime").value,
+    origin:document.getElementById("bookingOrigin").value,
+    distance:document.getElementById("bookingDistance").value,
+    fee:fee,
+    transport:transport,
+    travel:document.getElementById("bookingTravel").value,
+    accommodation:document.getElementById("bookingAccommodation").value,
+    notes:document.getElementById("bookingNotes").value.trim(),
+    status:"Linasubiri",
+    updatedAt:new Date().toISOString()
+  };
+
+  const previous = [...bookings];
+
+  if (editingBooking) {
+    const index = bookings.findIndex(b => b.reference === editingBooking);
+    if (index === -1) {
+      alert("Ombi halijapatikana.");
+      return;
+    }
+    bookings[index] = {...bookings[index],...data};
+  } else {
+    bookings.push(data);
+  }
+
+  if (!saveData(BOOKING_KEY,bookings)) {
+    bookings = previous;
+    return;
+  }
+
+  renderBookings();
+  resetBooking();
+
+  alert("Ombi limehifadhiwa kikamilifu.");
+});
+
+// ========================================
+// 6. ONYESHA DAFTARI LA BOOKING
+// ========================================
+
+function renderBookings() {
+  const body = document.getElementById("bookingRecords");
+
+  if (!bookings.length) {
+    body.innerHTML = `
+      <tr><td colspan="8">Hakuna maombi yaliyosajiliwa.</td></tr>
+    `;
+  } else {
+    body.innerHTML = bookings.map((b,index) => `
+      <tr>
+        <td>${escapeHTML(b.reference)}</td>
+        <td>${escapeHTML(b.client)}</td>
+        <td>${escapeHTML(b.service)}</td>
+        <td>${escapeHTML(b.town)}, ${escapeHTML(b.region)}</td>
+        <td>${escapeHTML(b.date)}</td>
+        <td>${money(b.fee)}</td>
+        <td>${escapeHTML(b.status)}</td>
+        <td>
+          <button class="btn secondary"
+            onclick="editBooking(${index})">HARIRI</button>
+          <button class="btn secondary"
+            onclick="deleteBooking(${index})">FUTA</button>
+          <button class="btn secondary"
+            onclick="sendBookingWhatsApp(${index})">TUMA</button>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  updateDashboard();
+}
+
+window.editBooking = function(index) {
+  const b = bookings[index];
+  if (!b) return;
+
+  editingBooking = b.reference;
+
+  document.getElementById("bookingRef").value = b.reference;
+  document.getElementById("bookingClient").value = b.client;
+  document.getElementById("bookingPhone").value = b.phone;
+  document.getElementById("bookingEmail").value = b.email;
+  document.getElementById("bookingService").value = b.service;
+  document.getElementById("bookingEvent").value = b.event;
+
+  document.getElementById("bookingRegion").value = b.region;
+  updateTowns("bookingRegion","bookingTown");
+  document.getElementById("bookingTown").value = b.town;
+
+  document.getElementById("bookingDate").value = b.date;
+  document.getElementById("bookingTime").value = b.time;
+  document.getElementById("bookingOrigin").value = b.origin;
+  document.getElementById("bookingDistance").value = b.distance;
+  document.getElementById("bookingFee").value = b.fee;
+  document.getElementById("bookingTransport").value = b.transport;
+  document.getElementById("bookingTravel").value = b.travel;
+  document.getElementById("bookingAccommodation").value = b.accommodation;
+  document.getElementById("bookingNotes").value = b.notes;
+
+  document.getElementById("booking").scrollIntoView({behavior:"smooth"});
+};
+
+window.deleteBooking = function(index) {
+  if (!confirm("Una uhakika unataka kufuta ombi hili?")) return;
+
+  const old = [...bookings];
+  bookings.splice(index,1);
+
+  if (!saveData(BOOKING_KEY,bookings)) {
+    bookings = old;
+    return;
+  }
+
+  renderBookings();
+};
+
+window.sendBookingWhatsApp = function(index) {
+  const b = bookings[index];
+
+  const message =
+    "Habari Senga. Ombi la huduma: " + b.reference +
+    ". Mteja: " + b.client +
+    ". Tukio: " + b.event +
+    ". Eneo: " + b.town + ", " + b.region +
+    ". Tarehe: " + b.date +
+    ". Ada: TZS " + money(b.fee);
+
+  window.open(
+    "https://wa.me/?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+};
+
+// ========================================
+// 7. LEGAL360
+// ========================================
+
+const legalFields = [
+  "l360Reference","l360Booking","l360Client","l360Phone",
+  "l360Email","l360Event","l360Location","l360Date",
+  "l360Duration","l360Fee","l360Deposit","l360PaymentDate",
+  "l360Obligations","l360ClientObligations","l360Cancellation",
+  "l360Rights","l360Force","l360Disputes","l360Additional",
+  "l360Status"
+];
+
+function legalData() {
+  const data = {};
+
+  legalFields.forEach(id => {
+    data[id] = document.getElementById(id).value.trim();
+  });
+
+  return data;
+}
+
+function legalReset() {
+  document.getElementById("legal360Form").reset();
+  editingContract = null;
+
+  document.getElementById("l360Reference").value =
+    makeReference("SENGA-L360");
+}
+
+window.legal360Reset = legalReset;
+
+document.getElementById("legal360Form")
+.addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  if (!this.reportValidity()) return;
+
+  const data = legalData();
+
+  const fee = Number(data.l360Fee || 0);
+  const deposit = Number(data.l360Deposit || 0);
+
+  if (fee < 0 || deposit < 0 || deposit > fee) {
+    alert("Tafadhali hakikisha malipo ya awali hayazidi ada ya mkataba.");
+    return;
+  }
+
+  const old = [...contracts];
+
+  if (editingContract) {
+    const index = contracts.findIndex(c => c.id === editingContract);
+
+    if (index === -1) {
+      alert("Mkataba haujapatikana.");
+      return;
+    }
+
+    contracts[index] = {
+      ...contracts[index],
+      ...data,
+      updatedAt:new Date().toISOString()
+    };
+
+  } else {
+    contracts.push({
+      ...data,
+      id:"L360-" + Date.now(),
+      createdAt:new Date().toISOString()
     });
-  </script>
+  }
+
+  if (!saveData(LEGAL_KEY,contracts)) {
+    contracts = old;
+    return;
+  }
+
+  renderContracts();
+  legalReset();
+
+  alert("Mkataba umehifadhiwa.");
+});
+
+// ========================================
+// 8. DAFTARI LA MIKATABA
+// ========================================
+
+function renderContracts() {
+  const body = document.getElementById("legal360Records");
+
+  if (!contracts.length) {
+    body.innerHTML = `
+      <tr><td colspan="7">Hakuna mikataba iliyosajiliwa.</td></tr>
+    `;
+  } else {
+    body.innerHTML = contracts.map((c,index) => `
+      <tr>
+        <td>${escapeHTML(c.l360Reference)}</td>
+        <td>${escapeHTML(c.l360Client)}</td>
+        <td>${escapeHTML(c.l360Event)}</td>
+        <td>${escapeHTML(c.l360Date)}</td>
+        <td>${money(c.l360Fee)}</td>
+        <td>${escapeHTML(c.l360Status)}</td>
+        <td>
+          <button class="btn secondary"
+            onclick="editContract(${index})">HARIRI</button>
+          <button class="btn secondary"
+            onclick="printContract(${index})">CHAPISHA</button>
+          <button class="btn secondary"
+            onclick="deleteContract(${index})">FUTA</button>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  updateDashboard();
+}
+
+window.editContract = function(index) {
+  const c = contracts[index];
+  if (!c) return;
+
+  editingContract = c.id;
+
+  legalFields.forEach(id => {
+    document.getElementById(id).value = c[id] || "";
+  });
+
+  document.getElementById("legal360").scrollIntoView({
+    behavior:"smooth"
+  });
+};
+
+window.deleteContract = function(index) {
+  const c = contracts[index];
+
+  if (!confirm("Unataka kufuta mkataba " + c.l360Reference + "?")) {
+    return;
+  }
+
+  const old = [...contracts];
+
+  contracts.splice(index,1);
+
+  if (!saveData(LEGAL_KEY,contracts)) {
+    contracts = old;
+    return;
+  }
+
+  renderContracts();
+};
+
+// ========================================
+// 9. CHAPISHA MKATABA
+// ========================================
+
+window.printContract = function(index) {
+  const c = contracts[index];
+  if (!c) return;
+
+  const fee = Number(c.l360Fee || 0);
+  const deposit = Number(c.l360Deposit || 0);
+
+  const sections = [
+    ["Wajibu wa Senga",c.l360Obligations],
+    ["Wajibu wa Mteja",c.l360ClientObligations],
+    ["Usitishaji na Kuahirisha",c.l360Cancellation],
+    ["Haki za Kurekodi na Ubunifu",c.l360Rights],
+    ["Mazingira Yasiyozuilika",c.l360Force],
+    ["Utatuzi wa Migogoro",c.l360Disputes],
+    ["Masharti ya Ziada",c.l360Additional]
+  ];
+
+  const details = sections.map(s => `
+    <h3>${escapeHTML(s[0])}</h3>
+    <p>${escapeHTML(s[1] || "Haijabainishwa.").replace(/\n/g,"<br>")}</p>
+  `).join("");
+
+  const w = window.open("","_blank","width=900,height=750");
+
+  if (!w) {
+    alert("Ruhusu madirisha ibukizi (pop-ups) ili kuchapisha.");
+    return;
+  }
+
+  w.document.write(`
+    <!DOCTYPE html>
+    <html lang="sw">
+    <head>
+      <meta charset="UTF-8">
+      <title>Mkataba ${escapeHTML(c.l360Reference)}</title>
+      <style>
+        body {font-family:Arial,sans-serif;padding:30px;color:#222;line-height:1.6}
+        h1 {text-align:center;color:#96701b}
+        h2 {border-bottom:2px solid #c49b32;padding-bottom:10px}
+        table {width:100%;border-collapse:collapse}
+        td {border:1px solid #ccc;padding:9px}
+        h3 {margin-top:22px}
+        .sign {display:flex;gap:40px;margin-top:65px}
+        .sign div {width:50%;border-top:1px solid #222;padding-top:8px}
+      </style>
+    </head>
+    <body>
+
+      <h1>SENGA</h1>
+      <h2>MKATABA WA MAONYESHO</h2>
+
+      <p><b>Namba ya Mkataba:</b> ${escapeHTML(c.l360Reference)}</p>
+      <p><b>Namba ya Booking:</b> ${escapeHTML(c.l360Booking)}</p>
+
+      <table>
+        <tr><td>Mteja</td><td>${escapeHTML(c.l360Client)}</td></tr>
+        <tr><td>Simu</td><td>${escapeHTML(c.l360Phone)}</td></tr>
+        <tr><td>Barua Pepe</td><td>${escapeHTML(c.l360Email)}</td></tr>
+        <tr><td>Tukio</td><td>${escapeHTML(c.l360Event)}</td></tr>
+        <tr><td>Eneo</td><td>${escapeHTML(c.l360Location)}</td></tr>
+        <tr><td>Tarehe</td><td>${escapeHTML(c.l360Date)}</td></tr>
+        <tr><td>Muda</td><td>${escapeHTML(c.l360Duration)}</td></tr>
+        <tr><td>Ada</td><td>TZS ${money(fee)}</td></tr>
+        <tr><td>Malipo ya Awali</td><td>TZS ${money(deposit)}</td></tr>
+        <tr><td>Salio</td><td>TZS ${money(fee-deposit)}</td></tr>
+        <tr><td>Tarehe ya Mwisho ya Malipo</td><td>${escapeHTML(c.l360PaymentDate)}</td></tr>
+        <tr><td>Hali</td><td>${escapeHTML(c.l360Status)}</td></tr>
+      </table>
+
+      ${details}
+
+      <h3>UTHIBITISHO WA MAKUBALIANO</h3>
+      <p>
+        Wahusika wanathibitisha kuwa wamepitia masharti
+        ya mkataba huu na wamekubaliana nayo.
+      </p>
+
+      <div class="sign">
+        <div>
+          <b>MWAKILISHI WA MTEJA</b>
+          <p>Jina:</p>
+          <p>Saini:</p>
+          <p>Tarehe:</p>
+        </div>
+        <div>
+          <b>MWAKILISHI WA SENGA</b>
+          <p>Jina:</p>
+          <p>Saini:</p>
+          <p>Tarehe:</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <p>
+        Imetengenezwa na AAMush Technologies Tanzania Ltd.
+        <br>
+        Strategic Architect: Dr. James K. Mushi, PhD.
+      </p>
+
+      <p>
+        Mkataba huu ni kiolezo cha kiutawala na unapaswa
+        kupitiwa na mtaalamu wa sheria kabla ya kusainiwa.
+      </p>
+
+      <script>
+        window.onload = function() { window.print(); };
+      <\/script>
+
+    </body>
+    </html>
+  `);
+
+  w.document.close();
+};
+
+// ========================================
+// 10. DASHIBODI
+// ========================================
+
+function updateDashboard() {
+  document.getElementById("totalBookings").textContent =
+    bookings.length;
+
+  document.getElementById("totalContracts").textContent =
+    contracts.length;
+
+  const total = bookings.reduce((sum,b) =>
+    sum + Number(b.fee || 0),0);
+
+  document.getElementById("totalRevenue").textContent =
+    "TZS " + money(total);
+}
+
+// ========================================
+// 11. NAKALA YA TAARIFA
+// ========================================
+
+window.exportBackup = function() {
+  const data = {
+    mfumo:"SENGA KISWAHILI",
+    tarehe:new Date().toISOString(),
+    bookings:bookings,
+    mikataba:contracts
+  };
+
+  downloadFile(
+    JSON.stringify(data,null,2),
+    "senga-kumbukumbu-backup.json",
+    "application/json"
+  );
+};
+
+window.exportCSV = function() {
+  const headers = [
+    "Namba","Mteja","Simu","Huduma","Tukio",
+    "Mkoa","Mji","Tarehe","Ada","Usafiri","Hali"
+  ];
+
+  const rows = bookings.map(b => [
+    b.reference,b.client,b.phone,b.service,b.event,
+    b.region,b.town,b.date,b.fee,b.transport,b.status
+  ]);
+
+  const csv = [headers,...rows].map(row =>
+    row.map(value =>
+      '"' + String(value ?? "").replace(/"/g,'""') + '"'
+    ).join(",")
+  ).join("\n");
+
+  downloadFile(
+    "\uFEFF" + csv,
+    "senga-daftari-la-maombi.csv",
+    "text/csv;charset=utf-8"
+  );
+};
+
+function downloadFile(content,filename,type) {
+  const blob = new Blob([content],{type:type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+// ========================================
+// 12. USAFISHAJI WA HTML
+// ========================================
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+function money(value) {
+  return Number(value || 0).toLocaleString("en-TZ",{
+    maximumFractionDigits:0
+  });
+}
+
+// ========================================
+// 13. KUANZISHA MFUMO
+// ========================================
+
+displayServices();
+displayModules();
+
+populateRegionSelect("bookingRegion");
+populateRegionSelect("regionExplorer");
+
+resetBooking();
+legalReset();
+
+renderBookings();
+renderContracts();
+
+document.getElementById("currentYear").textContent =
+  new Date().getFullYear();
+
+console.log("SENGA KISWAHILI COMMAND CENTRE: IMEANZISHWA.");
+
+})();
+</script>
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101010">
+
+<title>SENGA | Daktari wa Kutibu Stress</title>
+
+<style>
+:root {
+  --gold:#e5b53c;
+  --dark:#101010;
+  --panel:#1b1b1b;
+  --muted:#aaa;
+  --white:#f5f5f5;
+  --border:#383838;
+  --green:#00a878;
+  --red:#d94b4b;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  background:var(--dark);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+}
+
+button,input,select,textarea {font:inherit}
+
+button {cursor:pointer}
+
+header.main-header {
+  background:#090909;
+  border-bottom:2px solid var(--gold);
+  padding:14px 18px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.header-inner {
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand {
+  color:var(--gold);
+  font-size:25px;
+  font-weight:bold;
+  letter-spacing:3px;
+}
+
+.brand small {
+  display:block;
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:1px;
+  margin-top:4px;
+}
+
+nav {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+
+nav a {
+  color:#eee;
+  text-decoration:none;
+  font-size:12px;
+  padding:9px;
+}
+
+nav a:hover {color:var(--gold)}
+
+.hero {
+  min-height:480px;
+  display:flex;
+  align-items:center;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.48)),
+    url("senga-yellow-shirt.jpg") center 30%/cover no-repeat;
+  border-bottom:1px solid var(--gold);
+}
+
+.hero-inner {
+  width:100%;
+  max-width:1200px;
+  padding:55px 22px;
+  margin:auto;
+}
+
+.hero h1 {
+  font-size:clamp(38px,7vw,76px);
+  color:var(--gold);
+  margin:10px 0;
+  max-width:750px;
+}
+
+.hero p {
+  font-size:18px;
+  line-height:1.7;
+  max-width:650px;
+  color:#eee;
+}
+
+.eyebrow {
+  color:var(--gold);
+  letter-spacing:3px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.btn {
+  display:inline-block;
+  border:0;
+  border-radius:5px;
+  padding:12px 18px;
+  margin:5px 4px 5px 0;
+  background:var(--gold);
+  color:#111;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.btn.secondary {
+  background:#333;
+  border:1px solid #666;
+  color:white;
+}
+
+.btn.danger {
+  background:#8d2828;
+  color:white;
+}
+
+.container {
+  max-width:1200px;
+  margin:auto;
+  padding:35px 18px;
+}
+
+.section-title {
+  color:var(--gold);
+  font-size:26px;
+  border-bottom:1px solid #444;
+  padding-bottom:12px;
+  margin-bottom:22px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+.card h3 {color:var(--gold)}
+
+.card p {
+  color:#ccc;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.metric {
+  font-size:28px;
+  color:var(--gold);
+  font-weight:bold;
+}
+
+label {
+  display:block;
+  color:var(--gold);
+  font-size:13px;
+  margin:12px 0 6px;
+}
+
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  background:#101010;
+  color:white;
+  border:1px solid #555;
+  border-radius:5px;
+}
+
+textarea {
+  min-height:90px;
+  resize:vertical;
+}
+
+.form-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+
+.full {grid-column:1/-1}
+
+.table-wrap {
+  overflow-x:auto;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th,td {
+  border-bottom:1px solid #444;
+  padding:12px;
+  text-align:left;
+  font-size:12px;
+}
+
+th {color:var(--gold)}
+
+.badge {
+  color:var(--gold);
+  font-weight:bold;
+}
+
+.notice {
+  color:#aaa;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.hidden {display:none!important}
+
+.module-number {
+  font-size:12px;
+  color:var(--gold);
+  letter-spacing:2px;
+}
+
+footer {
+  border-top:2px solid var(--gold);
+  padding:30px 18px;
+  background:#080808;
+  color:#aaa;
+  text-align:center;
+  line-height:1.8;
+}
+
+.whatsapp {
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:200;
+  background:#128c50;
+  color:white;
+  border-radius:30px;
+  padding:14px 18px;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 4px 15px #000;
+}
+
+@media(max-width:800px) {
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .header-inner {align-items:flex-start;flex-direction:column}
+  nav {max-width:100%}
+}
+
+@media(max-width:550px) {
+  .grid,.form-grid {grid-template-columns:1fr}
+  .hero {min-height:420px}
+  .container {padding:25px 13px}
+  .brand {font-size:22px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="main-header">
+  <div class="header-inner">
+
+    <div class="brand">
+      SENGA
+      <small>DAKTARI WA KUTIBU STRESS</small>
+    </div>
+
+    <nav>
+      <a href="#nyumbani">Nyumbani</a>
+      <a href="#huduma">Huduma</a>
+      <a href="#booking">Miadi</a>
+      <a href="#maeneo">Maeneo</a>
+      <a href="#dashibodi">Dashibodi</a>
+      <a href="#legal360">LEGAL360</a>
+    </nav>
+
+  </div>
+</header>
+
+<!-- NYUMBANI -->
+
+<section class="hero" id="nyumbani">
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      SENGA DIGITAL BRAND COMMAND CENTRE
+    </div>
+
+    <h1>BURUDANI YENYE KUMBUKUMBU</h1>
+
+    <p>
+      Karibu kwenye mfumo rasmi wa kidijitali wa Senga.
+      Mfumo wa kuratibu maonyesho, maombi ya huduma,
+      makubaliano ya kazi na usimamizi wa shughuli za kisanii.
+    </p>
+
+    <a class="btn" href="#booking">OMBA HUDUMA</a>
+    <a class="btn secondary" href="#huduma">TAZAMA HUDUMA</a>
+
+    <p class="notice">
+      Senga — Ulimboka Anangisye.
+      Daktari wa Kutibu Stress.
+    </p>
+
+  </div>
+</section>
+
+<!-- DASHIBODI YA MUHTASARI -->
+
+<section class="container" id="dashibodi">
+
+  <h2 class="section-title">Kituo Kikuu cha Usimamizi</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="module-number">01</div>
+      <h3>Maombi ya Huduma</h3>
+      <div class="metric" id="totalBookings">0</div>
+      <p>Jumla ya maombi yaliyosajiliwa.</p>
+    </div>
+
+    <div class="card">
+      <div class="module-number">02</div>
+      <h3>Mikataba</h3>
+      <div class="metric" id="totalContracts">0</div>
+      <p>Jumla ya mikataba ya LEGAL360.</p>
+    </div>
+
+    <div class="card">
+      <div class="module-number">03</div>
+      <h3>Mapato Yanayotarajiwa</h3>
+      <div class="metric" id="totalRevenue">TZS 0</div>
+      <p>Jumla ya ada za maombi yaliyosajiliwa.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- HUDUMA -->
+
+<section class="container" id="huduma">
+
+  <h2 class="section-title">Huduma na Shughuli za Senga</h2>
+
+  <div class="grid" id="serviceGrid"></div>
+
+</section>
+
+<!-- MAOMBI YA HUDUMA -->
+
+<section class="container" id="booking">
+
+  <h2 class="section-title">Usajili wa Ombi la Huduma</h2>
+
+  <div class="card">
+
+    <form id="bookingForm">
+
+      <div class="form-grid">
+
+        <div>
+          <label>Namba ya Ombi</label>
+          <input id="bookingRef" readonly>
+        </div>
+
+        <div>
+          <label>Jina la Mteja / Taasisi</label>
+          <input id="bookingClient" required>
+        </div>
+
+        <div>
+          <label>Namba ya Simu</label>
+          <input id="bookingPhone" type="tel" required>
+        </div>
+
+        <div>
+          <label>Barua Pepe</label>
+          <input id="bookingEmail" type="email">
+        </div>
+
+        <div>
+          <label>Aina ya Huduma</label>
+          <select id="bookingService" required>
+            <option value="">Chagua huduma</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Jina la Tukio</label>
+          <input id="bookingEvent" required>
+        </div>
+
+        <div>
+          <label>Mkoa wa Tukio</label>
+          <select id="bookingRegion" required>
+            <option value="">Chagua mkoa</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Mji / Eneo la Tukio</label>
+          <select id="bookingTown" required>
+            <option value="">Chagua mji</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Tarehe ya Tukio</label>
+          <input id="bookingDate" type="date" required>
+        </div>
+
+        <div>
+          <label>Muda wa Tukio</label>
+          <input id="bookingTime" type="time">
+        </div>
+
+        <div>
+          <label>Mahali pa Kuanzia Safari</label>
+          <select id="bookingOrigin">
+            <option value="Dar es Salaam">Dar es Salaam</option>
+            <option value="Mkoa mwingine">Mkoa mwingine</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Umbali wa Safari (KM)</label>
+          <input id="bookingDistance" type="number" min="0"
+            placeholder="Ingiza umbali uliothibitishwa">
+        </div>
+
+        <div>
+          <label>Ada ya Huduma (TZS)</label>
+          <input id="bookingFee" type="number" min="0" required>
+        </div>
+
+        <div>
+          <label>Gharama ya Usafiri (TZS)</label>
+          <input id="bookingTransport" type="number" min="0">
+        </div>
+
+        <div>
+          <label>Aina ya Safari</label>
+          <select id="bookingTravel">
+            <option value="Safari ya barabara">Safari ya barabara</option>
+            <option value="Safari ya ndege">Safari ya ndege</option>
+            <option value="Feri kwenda Zanzibar">Feri kwenda Zanzibar</option>
+            <option value="Ndege kwenda Zanzibar">Ndege kwenda Zanzibar</option>
+            <option value="Usafiri mwingine">Usafiri mwingine</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Malazi Yanahitajika?</label>
+          <select id="bookingAccommodation">
+            <option>Hapana</option>
+            <option>Ndiyo</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <label>Maelezo ya Ziada</label>
+          <textarea id="bookingNotes"
+            placeholder="Eleza mahitaji ya tukio, idadi ya watu na maelezo mengine..."></textarea>
+        </div>
+
+      </div>
+
+      <button type="submit" class="btn">
+        HIFADHI OMBI
+      </button>
+
+      <button type="button" class="btn secondary"
+        onclick="resetBooking()">
+        FUTA FOMU
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+<!-- MAENEO -->
+
+<section class="container" id="maeneo">
+
+  <h2 class="section-title">
+    Mikoa 31 ya Tanzania na Maeneo ya Huduma
+  </h2>
+
+  <div class="card">
+
+    <p>
+      Chagua mkoa ili kuona miji na maeneo makuu
+      yanayotumika katika uratibu wa maonyesho.
+    </p>
+
+    <label>Mkoa</label>
+    <select id="regionExplorer">
+      <option value="">Chagua mkoa</option>
+    </select>
+
+    <label>Miji na Maeneo</label>
+    <select id="townExplorer">
+      <option value="">Chagua eneo</option>
+    </select>
+
+    <p id="regionInfo" class="notice">
+      Taarifa za eneo zitaonekana hapa.
+    </p>
+
+  </div>
+
+  <div class="card">
+    <h3>Uratibu wa Safari</h3>
+    <p>
+      Dar es Salaam imetumika kama sehemu ya kawaida ya
+      kuanzia safari. Umbali hutegemea mji, njia ya safari
+      na hali halisi ya usafiri.
+    </p>
+    <p class="notice">
+      Umbali hauwekwi kama kipimo rasmi bila kuthibitishwa
+      kwa njia husika. Kwa Zanzibar, gharama na muda wa
+      feri au ndege vinapaswa kuthibitishwa tofauti.
+    </p>
+  </div>
+
+</section>
+
+<!-- REGISTER YA BOOKING -->
+
+<section class="container">
+
+  <h2 class="section-title">Daftari la Maombi ya Huduma</h2>
+
+  <div class="card">
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Namba</th>
+            <th>Mteja</th>
+            <th>Huduma</th>
+            <th>Eneo</th>
+            <th>Tarehe</th>
+            <th>Ada</th>
+            <th>Hali</th>
+            <th>Vitendo</th>
+          </tr>
+        </thead>
+
+        <tbody id="bookingRecords"></tbody>
+      </table>
+    </div>
+
+    <button class="btn secondary" onclick="exportBackup()">
+      PAKUA NAKALA YA TAARIFA
+    </button>
+
+    <button class="btn secondary" onclick="exportCSV()">
+      PAKUA DAFTARI LA CSV
+    </button>
+
+  </div>
+
+</section>
+
+<!-- MODULES -->
+
+<section class="container">
+
+  <h2 class="section-title">
+    Vitengo 16 vya Usimamizi wa Senga
+  </h2>
+
+  <div class="grid" id="moduleGrid"></div>
+
+</section>
+
+<!-- LEGAL360 -->
+
+<section id="legal360" class="container">
+
+  <h2 class="section-title">LEGAL360 — Usimamizi wa Mikataba</h2>
+
+  <div class="card">
+
+    <h3>01. Kuandaa Mkataba wa Maonyesho</h3>
+
+    <form id="legal360Form">
+
+      <div class="form-grid">
+
+        <div>
+          <label>Namba ya Mkataba</label>
+          <input id="l360Reference" readonly>
+        </div>
+
+        <div>
+          <label>Namba ya Booking</label>
+          <input id="l360Booking">
+        </div>
+
+        <div>
+          <label>Mteja / Taasisi</label>
+          <input id="l360Client" required>
+        </div>
+
+        <div>
+          <label>Simu ya Mteja</label>
+          <input id="l360Phone">
+        </div>
+
+        <div>
+          <label>Barua Pepe</label>
+          <input id="l360Email" type="email">
+        </div>
+
+        <div>
+          <label>Jina la Tukio</label>
+          <input id="l360Event" required>
+        </div>
+
+        <div>
+          <label>Eneo la Tukio</label>
+          <input id="l360Location" required>
+        </div>
+
+        <div>
+          <label>Tarehe ya Maonyesho</label>
+          <input id="l360Date" type="date" required>
+        </div>
+
+        <div>
+          <label>Muda wa Maonyesho</label>
+          <input id="l360Duration" placeholder="Mfano: Dakika 60">
+        </div>
+
+        <div>
+          <label>Ada ya Maonyesho (TZS)</label>
+          <input id="l360Fee" type="number" min="0" required>
+        </div>
+
+        <div>
+          <label>Malipo ya Awali (TZS)</label>
+          <input id="l360Deposit" type="number" min="0">
+        </div>
+
+        <div>
+          <label>Tarehe ya Mwisho ya Malipo</label>
+          <input id="l360PaymentDate" type="date">
+        </div>
+
+      </div>
+
+      <h3>02. Masharti ya Mkataba</h3>
+
+      <label>Wajibu wa Senga</label>
+      <textarea id="l360Obligations"></textarea>
+
+      <label>Wajibu wa Mteja</label>
+      <textarea id="l360ClientObligations"></textarea>
+
+      <label>Usitishaji na Kuahirisha Tukio</label>
+      <textarea id="l360Cancellation"></textarea>
+
+      <label>Upigaji Picha, Kurekodi na Haki za Ubunifu</label>
+      <textarea id="l360Rights"></textarea>
+
+      <label>Mazingira Yasiyozuilika (Force Majeure)</label>
+      <textarea id="l360Force"></textarea>
+
+      <label>Utatuzi wa Migogoro na Sheria Inayotumika</label>
+      <textarea id="l360Disputes"></textarea>
+
+      <label>Masharti ya Ziada</label>
+      <textarea id="l360Additional"></textarea>
+
+      <label>Hali ya Mkataba</label>
+      <select id="l360Status">
+        <option>Rasimu</option>
+        <option>Imetumwa kwa Mapitio</option>
+        <option>Inasubiri Saini</option>
+        <option>Imesainiwa</option>
+        <option>Unaendelea</option>
+        <option>Umekamilika</option>
+        <option>Umefutwa</option>
+      </select>
+
+      <button type="submit" class="btn">
+        HIFADHI MKATABA
+      </button>
+
+      <button type="button" class="btn secondary"
+        onclick="legal360Reset()">
+        FUTA FOMU
+      </button>
+
+    </form>
+
+  </div>
+
+  <div class="card">
+
+    <h3>03. Daftari la Mikataba</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Namba</th>
+            <th>Mteja</th>
+            <th>Tukio</th>
+            <th>Tarehe</th>
+            <th>Ada</th>
+            <th>Hali</th>
+            <th>Vitendo</th>
+          </tr>
+        </thead>
+
+        <tbody id="legal360Records"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <p class="notice">
+    LEGAL360 ni mfumo wa kiutawala wa kuandaa na kuhifadhi
+    mikataba. Mkataba unapaswa kupitiwa na mtaalamu wa sheria
+    kabla ya kusainiwa. Mfumo huu hauhakikishi utambulisho
+    wa wahusika wala uhalali wa saini za kielektroniki.
+  </p>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+  <h2 style="color:#e5b53c">SENGA</h2>
+
+  <p>
+    Daktari wa Kutibu Stress
+  </p>
+
+  <p>
+    Mfumo wa Kidijitali wa Usimamizi wa Shughuli za Kisanii
+  </p>
+
+  <p>
+    Imetengenezwa na AAMush Technologies Tanzania Ltd.
+    <br>
+    Strategic Architect: Dr. James K. Mushi, PhD.
+  </p>
+
+  <p class="notice">
+    © <span id="currentYear"></span>
+    SENGA Digital Brand Command Centre.
+    Haki zote zimehifadhiwa.
+  </p>
+
+</footer>
+
+<a class="whatsapp"
+   href="https://wa.me/?text=Habari%20Senga%2C%20naomba%20taarifa%20za%20huduma."
+   target="_blank" rel="noopener">
+  WHATSAPP
+</a>
+
+<script>
+(function() {
+"use strict";
+
+// ========================================
+// 1. HIFADHI YA TAARIFA
+// ========================================
+
+const BOOKING_KEY = "SENGA_SW_BOOKINGS";
+const LEGAL_KEY = "SENGA_SW_LEGAL360";
+
+let bookings = [];
+let contracts = [];
+let editingBooking = null;
+let editingContract = null;
+
+function loadData(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "[]");
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveData(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+    return true;
+  } catch(e) {
+    alert("Imeshindikana kuhifadhi taarifa. Angalia nafasi ya browser.");
+    return false;
+  }
+}
+
+bookings = loadData(BOOKING_KEY);
+contracts = loadData(LEGAL_KEY);
+
+// ========================================
+// 2. HUDUMA 16
+// ========================================
+
+const services = [
+  "Maonyesho ya Moja kwa Moja",
+  "Burudani za Sherehe",
+  "Matukio ya Kampuni",
+  "Matukio ya Serikali na Taasisi",
+  "Sherehe za Harusi",
+  "Sherehe za Familia",
+  "Matamasha",
+  "Maonyesho ya Kijamii",
+  "Vipindi vya Televisheni",
+  "Vipindi vya Redio",
+  "Filamu na Tamthilia",
+  "Matangazo ya Biashara",
+  "Ushirikiano wa Kibiashara",
+  "Matukio ya Kimataifa",
+  "Ushauri wa Sanaa na Ubunifu",
+  "Huduma Maalumu"
+];
+
+const modules = [
+  "Usimamizi wa Maombi",
+  "Kalenda ya Maonyesho",
+  "Usimamizi wa Wateja",
+  "Uratibu wa Safari",
+  "Ramani ya Maeneo",
+  "Makadirio ya Gharama",
+  "Usimamizi wa Malipo",
+  "LEGAL360",
+  "Haki za Ubunifu",
+  "Mawasiliano",
+  "Usimamizi wa Matukio",
+  "Daftari la Kazi",
+  "Takwimu za Shughuli",
+  "Nyaraka na Ripoti",
+  "Usimamizi wa Ushirikiano",
+  "Usalama wa Taarifa"
+];
+
+function displayServices() {
+  const container = document.getElementById("serviceGrid");
+
+  container.innerHTML = services.map((service, index) => `
+    <div class="card">
+      <div class="module-number">HUDUMA ${(index + 1).toString().padStart(2,"0")}</div>
+      <h3>${escapeHTML(service)}</h3>
+      <button class="btn secondary"
+        onclick="selectService(${index})">
+        CHAGUA HUDUMA
+      </button>
+    </div>
+  `).join("");
+
+  const select = document.getElementById("bookingService");
+
+  select.innerHTML = '<option value="">Chagua huduma</option>' +
+    services.map(s => `<option>${escapeHTML(s)}</option>`).join("");
+}
+
+function displayModules() {
+  document.getElementById("moduleGrid").innerHTML =
+    modules.map((module,index) => `
+      <div class="card">
+        <div class="module-number">KITENGO ${(index+1).toString().padStart(2,"0")}</div>
+        <h3>${escapeHTML(module)}</h3>
+        <p>Kitengo cha uratibu na usimamizi wa shughuli za Senga.</p>
+      </div>
+    `).join("");
+}
+
+window.selectService = function(index) {
+  document.getElementById("bookingService").value = services[index];
+  document.getElementById("booking").scrollIntoView({
+    behavior:"smooth"
+  });
+};
+
+// ========================================
+// 3. MIKOA 31 NA MIJI
+// ========================================
+
+const regions = {
+  "Arusha":["Arusha","Karatu","Monduli","Longido","Meru","Ngorongoro"],
+  "Dar es Salaam":["Ilala","Kinondoni","Temeke","Ubungo","Kigamboni"],
+  "Dodoma":["Dodoma","Kondoa","Mpwapwa","Kongwa","Bahi","Chamwino"],
+  "Geita":["Geita","Chato","Mbogwe","Bukombe","Nyang'hwale"],
+  "Iringa":["Iringa","Mafinga","Kilolo","Mufindi","Ludewa"],
+  "Kagera":["Bukoba","Biharamulo","Ngara","Karagwe","Muleba","Kyerwa"],
+  "Katavi":["Mpanda","Mpimbwe","Mlele","Nsimbo"],
+  "Kigoma":["Kigoma","Kasulu","Uvinza","Kibondo","Kakonko","Buhigwe"],
+  "Kilimanjaro":["Moshi","Hai","Rombo","Same","Mwanga","Siha"],
+  "Lindi":["Lindi","Kilwa","Nachingwea","Liwale","Ruangwa"],
+  "Manyara":["Babati","Mbulu","Hanang","Simanjiro","Kiteto"],
+  "Mara":["Musoma","Tarime","Bunda","Serengeti","Rorya","Butiama"],
+  "Mbeya":["Mbeya","Tukuyu","Mbalizi","Chunya","Rungwe","Kyela"],
+  "Morogoro":["Morogoro","Kilosa","Mikumi","Ifakara","Mahenge","Gairo"],
+  "Mtwara":["Mtwara","Masasi","Newala","Nanyamba","Tandahimba"],
+  "Mwanza":["Mwanza","Sengerema","Misungwi","Kwimba","Magu","Ukerewe"],
+  "Njombe":["Njombe","Makambako","Ludewa","Wanging'ombe","Makete"],
+  "Pwani":["Kibaha","Bagamoyo","Mkuranga","Rufiji","Kisarawe","Mafia"],
+  "Rukwa":["Sumbawanga","Nkasi","Kalambo"],
+  "Ruvuma":["Songea","Mbinga","Tunduru","Namtumbo","Madaba"],
+  "Shinyanga":["Shinyanga","Kahama","Kishapu","Msalala","Ushetu"],
+  "Simiyu":["Bariadi","Maswa","Meatu","Busega","Itilima"],
+  "Singida":["Singida","Manyoni","Iramba","Mkalama","Ikungi"],
+  "Songwe":["Vwawa","Tunduma","Mbozi","Ileje","Momba"],
+  "Tabora":["Tabora","Nzega","Igunga","Sikonge","Urambo","Kaliua"],
+  "Tanga":["Tanga","Korogwe","Muheza","Pangani","Handeni","Lushoto"],
+  "Kaskazini Unguja":["Mkokotoni","Nungwi","Matemwe"],
+  "Kusini Unguja":["Koani","Makunduchi","Jambiani","Paje"],
+  "Mjini Magharibi":["Zanzibar Mjini","Stone Town","Magharibi"],
+  "Kaskazini Pemba":["Wete","Micheweni"],
+  "Kusini Pemba":["Chake Chake","Mkoani"]
+};
+
+function populateRegionSelect(selectId) {
+  const select = document.getElementById(selectId);
+
+  select.innerHTML = '<option value="">Chagua mkoa</option>';
+
+  Object.keys(regions).forEach(region => {
+    const option = document.createElement("option");
+    option.value = region;
+    option.textContent = region;
+    select.appendChild(option);
+  });
+}
+
+function updateTowns(regionId,townId) {
+  const region = document.getElementById(regionId).value;
+  const townSelect = document.getElementById(townId);
+
+  townSelect.innerHTML = '<option value="">Chagua mji</option>';
+
+  if (!regions[region]) return;
+
+  regions[region].forEach(town => {
+    const option = document.createElement("option");
+    option.value = town;
+    option.textContent = town;
+    townSelect.appendChild(option);
+  });
+}
+
+document.getElementById("bookingRegion").addEventListener("change",() => {
+  updateTowns("bookingRegion","bookingTown");
+});
+
+document.getElementById("regionExplorer").addEventListener("change",() => {
+  updateTowns("regionExplorer","townExplorer");
+
+  document.getElementById("regionInfo").textContent =
+    "Mkoa uliochaguliwa: " +
+    document.getElementById("regionExplorer").value;
+});
+
+// ========================================
+// 4. REFERENCE NUMBERS
+// ========================================
+
+function makeReference(prefix) {
+  const now = new Date();
+
+  const date =
+    now.getFullYear() +
+    String(now.getMonth()+1).padStart(2,"0") +
+    String(now.getDate()).padStart(2,"0");
+
+  return prefix + "-" + date + "-" +
+    Math.floor(1000 + Math.random()*9000);
+}
+
+function resetBooking() {
+  document.getElementById("bookingForm").reset();
+  editingBooking = null;
+  document.getElementById("bookingRef").value =
+    makeReference("SENGA-BK");
+}
+
+window.resetBooking = resetBooking;
+
+// ========================================
+// 5. USAJILI WA BOOKING
+// ========================================
+
+document.getElementById("bookingForm")
+.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  if (!this.reportValidity()) return;
+
+  const fee = Number(document.getElementById("bookingFee").value);
+  const transport = Number(document.getElementById("bookingTransport").value || 0);
+
+  if (fee < 0 || transport < 0) {
+    alert("Tafadhali weka kiasi sahihi cha fedha.");
+    return;
+  }
+
+  const data = {
+    reference:document.getElementById("bookingRef").value,
+    client:document.getElementById("bookingClient").value.trim(),
+    phone:document.getElementById("bookingPhone").value.trim(),
+    email:document.getElementById("bookingEmail").value.trim(),
+    service:document.getElementById("bookingService").value,
+    event:document.getElementById("bookingEvent").value.trim(),
+    region:document.getElementById("bookingRegion").value,
+    town:document.getElementById("bookingTown").value,
+    date:document.getElementById("bookingDate").value,
+    time:document.getElementById("bookingTime").value,
+    origin:document.getElementById("bookingOrigin").value,
+    distance:document.getElementById("bookingDistance").value,
+    fee:fee,
+    transport:transport,
+    travel:document.getElementById("bookingTravel").value,
+    accommodation:document.getElementById("bookingAccommodation").value,
+    notes:document.getElementById("bookingNotes").value.trim(),
+    status:"Linasubiri",
+    updatedAt:new Date().toISOString()
+  };
+
+  const previous = [...bookings];
+
+  if (editingBooking) {
+    const index = bookings.findIndex(b => b.reference === editingBooking);
+    if (index === -1) {
+      alert("Ombi halijapatikana.");
+      return;
+    }
+    bookings[index] = {...bookings[index],...data};
+  } else {
+    bookings.push(data);
+  }
+
+  if (!saveData(BOOKING_KEY,bookings)) {
+    bookings = previous;
+    return;
+  }
+
+  renderBookings();
+  resetBooking();
+
+  alert("Ombi limehifadhiwa kikamilifu.");
+});
+
+// ========================================
+// 6. ONYESHA DAFTARI LA BOOKING
+// ========================================
+
+function renderBookings() {
+  const body = document.getElementById("bookingRecords");
+
+  if (!bookings.length) {
+    body.innerHTML = `
+      <tr><td colspan="8">Hakuna maombi yaliyosajiliwa.</td></tr>
+    `;
+  } else {
+    body.innerHTML = bookings.map((b,index) => `
+      <tr>
+        <td>${escapeHTML(b.reference)}</td>
+        <td>${escapeHTML(b.client)}</td>
+        <td>${escapeHTML(b.service)}</td>
+        <td>${escapeHTML(b.town)}, ${escapeHTML(b.region)}</td>
+        <td>${escapeHTML(b.date)}</td>
+        <td>${money(b.fee)}</td>
+        <td>${escapeHTML(b.status)}</td>
+        <td>
+          <button class="btn secondary"
+            onclick="editBooking(${index})">HARIRI</button>
+          <button class="btn secondary"
+            onclick="deleteBooking(${index})">FUTA</button>
+          <button class="btn secondary"
+            onclick="sendBookingWhatsApp(${index})">TUMA</button>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  updateDashboard();
+}
+
+window.editBooking = function(index) {
+  const b = bookings[index];
+  if (!b) return;
+
+  editingBooking = b.reference;
+
+  document.getElementById("bookingRef").value = b.reference;
+  document.getElementById("bookingClient").value = b.client;
+  document.getElementById("bookingPhone").value = b.phone;
+  document.getElementById("bookingEmail").value = b.email;
+  document.getElementById("bookingService").value = b.service;
+  document.getElementById("bookingEvent").value = b.event;
+
+  document.getElementById("bookingRegion").value = b.region;
+  updateTowns("bookingRegion","bookingTown");
+  document.getElementById("bookingTown").value = b.town;
+
+  document.getElementById("bookingDate").value = b.date;
+  document.getElementById("bookingTime").value = b.time;
+  document.getElementById("bookingOrigin").value = b.origin;
+  document.getElementById("bookingDistance").value = b.distance;
+  document.getElementById("bookingFee").value = b.fee;
+  document.getElementById("bookingTransport").value = b.transport;
+  document.getElementById("bookingTravel").value = b.travel;
+  document.getElementById("bookingAccommodation").value = b.accommodation;
+  document.getElementById("bookingNotes").value = b.notes;
+
+  document.getElementById("booking").scrollIntoView({behavior:"smooth"});
+};
+
+window.deleteBooking = function(index) {
+  if (!confirm("Una uhakika unataka kufuta ombi hili?")) return;
+
+  const old = [...bookings];
+  bookings.splice(index,1);
+
+  if (!saveData(BOOKING_KEY,bookings)) {
+    bookings = old;
+    return;
+  }
+
+  renderBookings();
+};
+
+window.sendBookingWhatsApp = function(index) {
+  const b = bookings[index];
+
+  const message =
+    "Habari Senga. Ombi la huduma: " + b.reference +
+    ". Mteja: " + b.client +
+    ". Tukio: " + b.event +
+    ". Eneo: " + b.town + ", " + b.region +
+    ". Tarehe: " + b.date +
+    ". Ada: TZS " + money(b.fee);
+
+  window.open(
+    "https://wa.me/?text=" + encodeURIComponent(message),
+    "_blank"
+  );
+};
+
+// ========================================
+// 7. LEGAL360
+// ========================================
+
+const legalFields = [
+  "l360Reference","l360Booking","l360Client","l360Phone",
+  "l360Email","l360Event","l360Location","l360Date",
+  "l360Duration","l360Fee","l360Deposit","l360PaymentDate",
+  "l360Obligations","l360ClientObligations","l360Cancellation",
+  "l360Rights","l360Force","l360Disputes","l360Additional",
+  "l360Status"
+];
+
+function legalData() {
+  const data = {};
+
+  legalFields.forEach(id => {
+    data[id] = document.getElementById(id).value.trim();
+  });
+
+  return data;
+}
+
+function legalReset() {
+  document.getElementById("legal360Form").reset();
+  editingContract = null;
+
+  document.getElementById("l360Reference").value =
+    makeReference("SENGA-L360");
+}
+
+window.legal360Reset = legalReset;
+
+document.getElementById("legal360Form")
+.addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  if (!this.reportValidity()) return;
+
+  const data = legalData();
+
+  const fee = Number(data.l360Fee || 0);
+  const deposit = Number(data.l360Deposit || 0);
+
+  if (fee < 0 || deposit < 0 || deposit > fee) {
+    alert("Tafadhali hakikisha malipo ya awali hayazidi ada ya mkataba.");
+    return;
+  }
+
+  const old = [...contracts];
+
+  if (editingContract) {
+    const index = contracts.findIndex(c => c.id === editingContract);
+
+    if (index === -1) {
+      alert("Mkataba haujapatikana.");
+      return;
+    }
+
+    contracts[index] = {
+      ...contracts[index],
+      ...data,
+      updatedAt:new Date().toISOString()
+    };
+
+  } else {
+    contracts.push({
+      ...data,
+      id:"L360-" + Date.now(),
+      createdAt:new Date().toISOString()
+    });
+  }
+
+  if (!saveData(LEGAL_KEY,contracts)) {
+    contracts = old;
+    return;
+  }
+
+  renderContracts();
+  legalReset();
+
+  alert("Mkataba umehifadhiwa.");
+});
+
+// ========================================
+// 8. DAFTARI LA MIKATABA
+// ========================================
+
+function renderContracts() {
+  const body = document.getElementById("legal360Records");
+
+  if (!contracts.length) {
+    body.innerHTML = `
+      <tr><td colspan="7">Hakuna mikataba iliyosajiliwa.</td></tr>
+    `;
+  } else {
+    body.innerHTML = contracts.map((c,index) => `
+      <tr>
+        <td>${escapeHTML(c.l360Reference)}</td>
+        <td>${escapeHTML(c.l360Client)}</td>
+        <td>${escapeHTML(c.l360Event)}</td>
+        <td>${escapeHTML(c.l360Date)}</td>
+        <td>${money(c.l360Fee)}</td>
+        <td>${escapeHTML(c.l360Status)}</td>
+        <td>
+          <button class="btn secondary"
+            onclick="editContract(${index})">HARIRI</button>
+          <button class="btn secondary"
+            onclick="printContract(${index})">CHAPISHA</button>
+          <button class="btn secondary"
+            onclick="deleteContract(${index})">FUTA</button>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  updateDashboard();
+}
+
+window.editContract = function(index) {
+  const c = contracts[index];
+  if (!c) return;
+
+  editingContract = c.id;
+
+  legalFields.forEach(id => {
+    document.getElementById(id).value = c[id] || "";
+  });
+
+  document.getElementById("legal360").scrollIntoView({
+    behavior:"smooth"
+  });
+};
+
+window.deleteContract = function(index) {
+  const c = contracts[index];
+
+  if (!confirm("Unataka kufuta mkataba " + c.l360Reference + "?")) {
+    return;
+  }
+
+  const old = [...contracts];
+
+  contracts.splice(index,1);
+
+  if (!saveData(LEGAL_KEY,contracts)) {
+    contracts = old;
+    return;
+  }
+
+  renderContracts();
+};
+
+// ========================================
+// 9. CHAPISHA MKATABA
+// ========================================
+
+window.printContract = function(index) {
+  const c = contracts[index];
+  if (!c) return;
+
+  const fee = Number(c.l360Fee || 0);
+  const deposit = Number(c.l360Deposit || 0);
+
+  const sections = [
+    ["Wajibu wa Senga",c.l360Obligations],
+    ["Wajibu wa Mteja",c.l360ClientObligations],
+    ["Usitishaji na Kuahirisha",c.l360Cancellation],
+    ["Haki za Kurekodi na Ubunifu",c.l360Rights],
+    ["Mazingira Yasiyozuilika",c.l360Force],
+    ["Utatuzi wa Migogoro",c.l360Disputes],
+    ["Masharti ya Ziada",c.l360Additional]
+  ];
+
+  const details = sections.map(s => `
+    <h3>${escapeHTML(s[0])}</h3>
+    <p>${escapeHTML(s[1] || "Haijabainishwa.").replace(/\n/g,"<br>")}</p>
+  `).join("");
+
+  const w = window.open("","_blank","width=900,height=750");
+
+  if (!w) {
+    alert("Ruhusu madirisha ibukizi (pop-ups) ili kuchapisha.");
+    return;
+  }
+
+  w.document.write(`
+    <!DOCTYPE html>
+    <html lang="sw">
+    <head>
+      <meta charset="UTF-8">
+      <title>Mkataba ${escapeHTML(c.l360Reference)}</title>
+      <style>
+        body {font-family:Arial,sans-serif;padding:30px;color:#222;line-height:1.6}
+        h1 {text-align:center;color:#96701b}
+        h2 {border-bottom:2px solid #c49b32;padding-bottom:10px}
+        table {width:100%;border-collapse:collapse}
+        td {border:1px solid #ccc;padding:9px}
+        h3 {margin-top:22px}
+        .sign {display:flex;gap:40px;margin-top:65px}
+        .sign div {width:50%;border-top:1px solid #222;padding-top:8px}
+      </style>
+    </head>
+    <body>
+
+      <h1>SENGA</h1>
+      <h2>MKATABA WA MAONYESHO</h2>
+
+      <p><b>Namba ya Mkataba:</b> ${escapeHTML(c.l360Reference)}</p>
+      <p><b>Namba ya Booking:</b> ${escapeHTML(c.l360Booking)}</p>
+
+      <table>
+        <tr><td>Mteja</td><td>${escapeHTML(c.l360Client)}</td></tr>
+        <tr><td>Simu</td><td>${escapeHTML(c.l360Phone)}</td></tr>
+        <tr><td>Barua Pepe</td><td>${escapeHTML(c.l360Email)}</td></tr>
+        <tr><td>Tukio</td><td>${escapeHTML(c.l360Event)}</td></tr>
+        <tr><td>Eneo</td><td>${escapeHTML(c.l360Location)}</td></tr>
+        <tr><td>Tarehe</td><td>${escapeHTML(c.l360Date)}</td></tr>
+        <tr><td>Muda</td><td>${escapeHTML(c.l360Duration)}</td></tr>
+        <tr><td>Ada</td><td>TZS ${money(fee)}</td></tr>
+        <tr><td>Malipo ya Awali</td><td>TZS ${money(deposit)}</td></tr>
+        <tr><td>Salio</td><td>TZS ${money(fee-deposit)}</td></tr>
+        <tr><td>Tarehe ya Mwisho ya Malipo</td><td>${escapeHTML(c.l360PaymentDate)}</td></tr>
+        <tr><td>Hali</td><td>${escapeHTML(c.l360Status)}</td></tr>
+      </table>
+
+      ${details}
+
+      <h3>UTHIBITISHO WA MAKUBALIANO</h3>
+      <p>
+        Wahusika wanathibitisha kuwa wamepitia masharti
+        ya mkataba huu na wamekubaliana nayo.
+      </p>
+
+      <div class="sign">
+        <div>
+          <b>MWAKILISHI WA MTEJA</b>
+          <p>Jina:</p>
+          <p>Saini:</p>
+          <p>Tarehe:</p>
+        </div>
+        <div>
+          <b>MWAKILISHI WA SENGA</b>
+          <p>Jina:</p>
+          <p>Saini:</p>
+          <p>Tarehe:</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <p>
+        Imetengenezwa na AAMush Technologies Tanzania Ltd.
+        <br>
+        Strategic Architect: Dr. James K. Mushi, PhD.
+      </p>
+
+      <p>
+        Mkataba huu ni kiolezo cha kiutawala na unapaswa
+        kupitiwa na mtaalamu wa sheria kabla ya kusainiwa.
+      </p>
+
+      <script>
+        window.onload = function() { window.print(); };
+      <\/script>
+
+    </body>
+    </html>
+  `);
+
+  w.document.close();
+};
+
+// ========================================
+// 10. DASHIBODI
+// ========================================
+
+function updateDashboard() {
+  document.getElementById("totalBookings").textContent =
+    bookings.length;
+
+  document.getElementById("totalContracts").textContent =
+    contracts.length;
+
+  const total = bookings.reduce((sum,b) =>
+    sum + Number(b.fee || 0),0);
+
+  document.getElementById("totalRevenue").textContent =
+    "TZS " + money(total);
+}
+
+// ========================================
+// 11. NAKALA YA TAARIFA
+// ========================================
+
+window.exportBackup = function() {
+  const data = {
+    mfumo:"SENGA KISWAHILI",
+    tarehe:new Date().toISOString(),
+    bookings:bookings,
+    mikataba:contracts
+  };
+
+  downloadFile(
+    JSON.stringify(data,null,2),
+    "senga-kumbukumbu-backup.json",
+    "application/json"
+  );
+};
+
+window.exportCSV = function() {
+  const headers = [
+    "Namba","Mteja","Simu","Huduma","Tukio",
+    "Mkoa","Mji","Tarehe","Ada","Usafiri","Hali"
+  ];
+
+  const rows = bookings.map(b => [
+    b.reference,b.client,b.phone,b.service,b.event,
+    b.region,b.town,b.date,b.fee,b.transport,b.status
+  ]);
+
+  const csv = [headers,...rows].map(row =>
+    row.map(value =>
+      '"' + String(value ?? "").replace(/"/g,'""') + '"'
+    ).join(",")
+  ).join("\n");
+
+  downloadFile(
+    "\uFEFF" + csv,
+    "senga-daftari-la-maombi.csv",
+    "text/csv;charset=utf-8"
+  );
+};
+
+function downloadFile(content,filename,type) {
+  const blob = new Blob([content],{type:type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+// ========================================
+// 12. USAFISHAJI WA HTML
+// ========================================
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+function money(value) {
+  return Number(value || 0).toLocaleString("en-TZ",{
+    maximumFractionDigits:0
+  });
+}
+
+// ========================================
+// 13. KUANZISHA MFUMO
+// ========================================
+
+displayServices();
+displayModules();
+
+populateRegionSelect("bookingRegion");
+populateRegionSelect("regionExplorer");
+
+resetBooking();
+legalReset();
+
+renderBookings();
+renderContracts();
+
+document.getElementById("currentYear").textContent =
+  new Date().getFullYear();
+
+console.log("SENGA KISWAHILI COMMAND CENTRE: IMEANZISHWA.");
+
+})();
+</script>
 
 </body>
 </html>
