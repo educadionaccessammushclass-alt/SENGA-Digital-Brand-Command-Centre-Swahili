@@ -912,39 +912,24 @@ const services = [
   "Huduma Maalumu"
 ];
 
-function showForm(record){
- editing=record?record._id:null;
- let html='<div class="sm-panel"><h3>'+(record?"Hariri Rekodi":"Sajili Rekodi Mpya")+'</h3><form id="smForm"><div class="sm-grid">';
- current.fields.forEach((f,i)=>{
- let val=record?(record["f"+i]||""):"";
- html+='<div><label>'+f[0]+'</label>';
- if(f[1]==="textarea"){
- html+='<textarea name="f'+i+'">'+escapeHTML(val)+'</textarea>';
- }else if(f[1]==="select"){
- html+='<select name="f'+i+'"><option value="">Chagua</option>';
- f[2].split("|").forEach(o=>html+='<option '+(val===o?"selected":"")+'>'+o+'</option>');
- html+='</select>';
- }else{
- html+='<input name="f'+i+'" type="'+f[1]+'" value="'+escapeAttr(val)+'">';
- }
- html+='</div>';
- });
- html+='</div><button type="submit">Hifadhi Rekodi</button><button type="button" class="secondary" onclick="SENGA.showList()">Ghairi</button></form></div>';
- document.getElementById("smContent").innerHTML=html;
- document.getElementById("smForm").onsubmit=function(e){
- e.preventDefault();
- let data=Object.fromEntries(new FormData(this).entries());
- let records=getRecords();
- if(editing){
- let index=records.findIndex(r=>r._id===editing);
- if(index>=0)records[index]={...records[index],...data,updatedAt:new Date().toISOString()};
- }else{
- records.unshift({...data,_id:"SG-"+Date.now(),createdAt:new Date().toISOString()});
- }
- saveRecords(records);
- editing=null;
- showList();
- };
+const modules = [
+  "Usimamizi wa Maombi",
+  "Kalenda ya Maonyesho",
+  "Usimamizi wa Wateja",
+  "Uratibu wa Safari",
+  "Ramani ya Maeneo",
+  "Makadirio ya Gharama",
+  "Usimamizi wa Malipo",
+  "LEGAL360",
+  "Haki za Ubunifu",
+  "Mawasiliano",
+  "Usimamizi wa Matukio",
+  "Daftari la Kazi",
+  "Takwimu za Shughuli",
+  "Nyaraka na Ripoti",
+  "Usimamizi wa Ushirikiano",
+  "Usalama wa Taarifa"
+];
 
 function displayServices() {
   const container = document.getElementById("serviceGrid");
@@ -967,32 +952,14 @@ function displayServices() {
 }
 
 function displayModules() {
-  const grid = document.getElementById("moduleGrid");
-
-  if (!grid) return;
-
-  grid.innerHTML = modules.map(module => `
-    <div
-      class="card"
-      role="button"
-      tabindex="0"
-      onclick="open('${module.id}')"
-      onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();open('${module.id}');}"
-      style="cursor:pointer;"
-    >
-      <div class="module-number">
-        KITENGO ${module.id}
+  document.getElementById("moduleGrid").innerHTML =
+    modules.map((module,index) => `
+      <div class="card">
+        <div class="module-number">KITENGO ${(index+1).toString().padStart(2,"0")}</div>
+        <h3>${escapeHTML(module)}</h3>
+        <p>Kitengo cha uratibu na usimamizi wa shughuli za Senga.</p>
       </div>
-
-      <h3>${escapeHTML(module.name)}</h3>
-
-      <p>${escapeHTML(module.desc)}</p>
-
-      <div class="module-action">
-        Fungua Kitengo →
-      </div>
-    </div>
-  `).join("");
+    `).join("");
 }
 
 window.selectService = function(index) {
