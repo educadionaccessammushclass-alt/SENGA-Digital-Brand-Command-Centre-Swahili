@@ -426,28 +426,77 @@ footer {
         </div>
 
         <div>
-          <label>Mkoa wa Tukio</label>
-          <select id="bookingRegion" required>
-            <option value="">Chagua mkoa</option>
-          </select>
-        </div>
+  <label>Mkoa wa Tukio</label>
+  <select id="bookingRegion" required>
+    <option value="">Chagua mkoa</option>
+  </select>
+</div>
 
-        <div>
-          <label>Mji / Eneo la Tukio</label>
-          <select id="bookingTown" required>
-            <option value="">Chagua mji</option>
-          </select>
-        </div>
+<div>
+  <label>Mji / Eneo la Tukio</label>
+  <select id="bookingTown" required>
+    <option value="">Chagua mji</option>
+  </select>
+</div>
 
-        <div>
-          <label>Tarehe ya Tukio</label>
-          <input id="bookingDate" type="date" required>
-        </div>
+<div>
+  <label>Tarehe ya Tukio</label>
+  <input id="bookingDate" type="date" required>
+</div>
 
-        <div>
-          <label>Muda wa Tukio</label>
-          <input id="bookingTime" type="time">
-        </div>
+<div>
+  <label>Muda wa Tukio</label>
+  <input id="bookingTime" type="time">
+</div>
+
+<div>
+  <label>Mahali pa Kuanzia Safari</label>
+  <select id="bookingOrigin">
+    <option value="Dar es Salaam">Dar es Salaam</option>
+    <option value="Mkoa mwingine">Mkoa mwingine</option>
+  </select>
+</div>
+
+<div>
+  <label>Umbali wa Safari (KM)</label>
+  <input id="bookingDistance" type="number" min="0"
+    placeholder="Ingiza umbali uliothibitishwa">
+</div>
+
+<div>
+  <label>Ada ya Huduma (TZS)</label>
+  <input id="bookingFee" type="number" min="0" required>
+</div>
+
+<div>
+  <label>Gharama ya Usafiri (TZS)</label>
+  <input id="bookingTransport" type="number" min="0">
+</div>
+
+<div>
+  <label>Aina ya Safari</label>
+  <select id="bookingTravel">
+    <option value="Safari ya barabara">Safari ya barabara</option>
+    <option value="Safari ya ndege">Safari ya ndege</option>
+    <option value="Feri kwenda Zanzibar">Feri kwenda Zanzibar</option>
+    <option value="Ndege kwenda Zanzibar">Ndege kwenda Zanzibar</option>
+    <option value="Usafiri mwingine">Usafiri mwingine</option>
+  </select>
+</div>
+
+<div>
+  <label>Malazi Yanahitajika?</label>
+  <select id="bookingAccommodation">
+    <option>Hapana</option>
+    <option>Ndiyo</option>
+  </select>
+</div>
+
+<div class="full">
+  <label>Maelezo ya Ziada</label>
+  <textarea id="bookingNotes"
+    placeholder="Eleza mahitaji ya tukio, idadi ya watu na maelezo mengine..."></textarea>
+</div>
 
         <div>
           <label>Mahali pa Kuanzia Safari</label>
