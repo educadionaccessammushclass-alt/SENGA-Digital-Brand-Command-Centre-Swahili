@@ -2547,11 +2547,54 @@ function populateRegionSelect(selectId) {
   });
 }
 
-function updateTowns(regionId,townId) {
+// MAENEO YA ARUSHA
+const regionalLocations = {
+  "Arusha": {
+    "Arusha": [
+      "Arusha CBD",
+      "Sakina",
+      "Sokoine",
+      "Kaloleni",
+      "Sekei",
+      "Njiro",
+      "Moshono",
+      "Olasiti"
+    ],
+    "Meru": [
+      "Usa River",
+      "Tengeru",
+      "Nkoaranga",
+      "Maji ya Chai"
+    ],
+    "Karatu": [
+      "Karatu Town",
+      "Mto wa Mbu"
+    ],
+    "Monduli": [
+      "Monduli Town",
+      "Mbuyuni"
+    ],
+    "Longido": [
+      "Longido Town",
+      "Namanga"
+    ],
+    "Ngorongoro": [
+      "Loliondo",
+      "Wasso"
+    ]
+  }
+};
+
+function updateTowns(regionId, townId) {
   const region = document.getElementById(regionId).value;
   const townSelect = document.getElementById(townId);
 
   townSelect.innerHTML = '<option value="">Chagua mji</option>';
+
+  const areaSelectId = townId + "Area";
+  const oldAreaSelect = document.getElementById(areaSelectId);
+
+  if (oldAreaSelect) oldAreaSelect.remove();
 
   if (!regions[region]) return;
 
@@ -2561,20 +2604,44 @@ function updateTowns(regionId,townId) {
     option.textContent = town;
     townSelect.appendChild(option);
   });
+
+  townSelect.onchange = function () {
+    const oldArea = document.getElementById(areaSelectId);
+    if (oldArea) oldArea.remove();
+
+    const areas = regionalLocations[region]?.[this.value];
+
+    if (!areas) return;
+
+    const areaSelect = document.createElement("select");
+    areaSelect.id = areaSelectId;
+    areaSelect.className = townSelect.className;
+
+    areaSelect.innerHTML =
+      '<option value="">Chagua eneo la huduma</option>';
+
+    areas.forEach(area => {
+      const option = document.createElement("option");
+      option.value = area;
+      option.textContent = area;
+      areaSelect.appendChild(option);
+    });
+
+    townSelect.insertAdjacentElement("afterend", areaSelect);
+  };
 }
 
-document.getElementById("bookingRegion").addEventListener("change",() => {
-  updateTowns("bookingRegion","bookingTown");
+document.getElementById("bookingRegion").addEventListener("change", () => {
+  updateTowns("bookingRegion", "bookingTown");
 });
 
-document.getElementById("regionExplorer").addEventListener("change",() => {
-  updateTowns("regionExplorer","townExplorer");
+document.getElementById("regionExplorer").addEventListener("change", () => {
+  updateTowns("regionExplorer", "townExplorer");
 
   document.getElementById("regionInfo").textContent =
     "Mkoa uliochaguliwa: " +
     document.getElementById("regionExplorer").value;
 });
-
 // ========================================
 // 4. REFERENCE NUMBERS
 // ========================================
