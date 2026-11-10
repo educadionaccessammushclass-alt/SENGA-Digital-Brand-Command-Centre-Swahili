@@ -1047,6 +1047,35 @@ document.getElementById("regionExplorer").addEventListener("change",() => {
     "Mkoa uliochaguliwa: " +
     document.getElementById("regionExplorer").value;
 });
+}
+
+function updateTowns(regionId,townId) {
+  const region = document.getElementById(regionId).value;
+  const townSelect = document.getElementById(townId);
+
+  townSelect.innerHTML = '<option value="">Chagua mji</option>';
+
+  if (!regions[region]) return;
+
+  regions[region].forEach(town => {
+    const option = document.createElement("option");
+    option.value = town;
+    option.textContent = town;
+    townSelect.appendChild(option);
+  });
+}
+
+document.getElementById("bookingRegion").addEventListener("change",() => {
+  updateTowns("bookingRegion","bookingTown");
+});
+
+document.getElementById("regionExplorer").addEventListener("change",() => {
+  updateTowns("regionExplorer","townExplorer");
+
+  document.getElementById("regionInfo").textContent =
+    "Mkoa uliochaguliwa: " +
+    document.getElementById("regionExplorer").value;
+});
 
 // ========================================
 // 4. REFERENCE NUMBERS
@@ -2550,41 +2579,647 @@ window.selectService = function(index) {
 // ========================================
 
 const regions = {
-  "Arusha":["Arusha","Karatu","Monduli","Longido","Meru","Ngorongoro"],
-  "Dar es Salaam":["Ilala","Kinondoni","Temeke","Ubungo","Kigamboni"],
-  "Dodoma":["Dodoma","Kondoa","Mpwapwa","Kongwa","Bahi","Chamwino"],
-  "Geita":["Geita","Chato","Mbogwe","Bukombe","Nyang'hwale"],
-  "Iringa":["Iringa","Mafinga","Kilolo","Mufindi","Ludewa"],
-  "Kagera":["Bukoba","Biharamulo","Ngara","Karagwe","Muleba","Kyerwa"],
-  "Katavi":["Mpanda","Mpimbwe","Mlele","Nsimbo"],
-  "Kigoma":["Kigoma","Kasulu","Uvinza","Kibondo","Kakonko","Buhigwe"],
-  "Kilimanjaro":["Moshi","Hai","Rombo","Same","Mwanga","Siha"],
-  "Lindi":["Lindi","Kilwa","Nachingwea","Liwale","Ruangwa"],
-  "Manyara":["Babati","Mbulu","Hanang","Simanjiro","Kiteto"],
-  "Mara":["Musoma","Tarime","Bunda","Serengeti","Rorya","Butiama"],
-  "Mbeya":["Mbeya","Tukuyu","Mbalizi","Chunya","Rungwe","Kyela"],
-  "Morogoro":["Morogoro","Kilosa","Mikumi","Ifakara","Mahenge","Gairo"],
-  "Mtwara":["Mtwara","Masasi","Newala","Nanyamba","Tandahimba"],
-  "Mwanza":["Mwanza","Sengerema","Misungwi","Kwimba","Magu","Ukerewe"],
-  "Njombe":["Njombe","Makambako","Ludewa","Wanging'ombe","Makete"],
-  "Pwani":["Kibaha","Bagamoyo","Mkuranga","Rufiji","Kisarawe","Mafia"],
-  "Rukwa":["Sumbawanga","Nkasi","Kalambo"],
-  "Ruvuma":["Songea","Mbinga","Tunduru","Namtumbo","Madaba"],
-  "Shinyanga":["Shinyanga","Kahama","Kishapu","Msalala","Ushetu"],
-  "Simiyu":["Bariadi","Maswa","Meatu","Busega","Itilima"],
-  "Singida":["Singida","Manyoni","Iramba","Mkalama","Ikungi"],
-  "Songwe":["Vwawa","Tunduma","Mbozi","Ileje","Momba"],
-  "Tabora":["Tabora","Nzega","Igunga","Sikonge","Urambo","Kaliua"],
-  "Tanga":["Tanga","Korogwe","Muheza","Pangani","Handeni","Lushoto"],
-  "Kaskazini Unguja":["Mkokotoni","Nungwi","Matemwe"],
-  "Kusini Unguja":["Koani","Makunduchi","Jambiani","Paje"],
-  "Mjini Magharibi":["Zanzibar Mjini","Stone Town","Magharibi"],
-  "Kaskazini Pemba":["Wete","Micheweni"],
-  "Kusini Pemba":["Chake Chake","Mkoani"]
-};
+  "Arusha": {
+    halmashauri: [
+      "Arusha City",
+      "Arusha District",
+      "Karatu District",
+      "Longido District",
+      "Meru District",
+      "Monduli District",
+      "Ngorongoro District"
+    ],
+    maeneo: [
+      "Arusha",
+      "Karatu",
+      "Monduli",
+      "Longido",
+      "Usa River",
+      "Ngaramtoni",
+      "Mto wa Mbu",
+      "Loliondo"
+    ]
+  },
 
+  "Dar es Salaam": {
+    halmashauri: [
+      "Dar es Salaam City",
+      "Kinondoni Municipal",
+      "Temeke Municipal",
+      "Ubungo Municipal",
+      "Kigamboni Municipal"
+    ],
+    maeneo: [
+      "Ilala",
+      "Kariakoo",
+      "Posta",
+      "Upanga",
+      "Kinondoni",
+      "Mikocheni",
+      "Mwenge",
+      "Kawe",
+      "Temeke",
+      "Mbagala",
+      "Kigamboni",
+      "Ubungo",
+      "Kimara",
+      "Sinza",
+      "Goba",
+      "Tegeta"
+    ]
+  },
+
+  "Dodoma": {
+    halmashauri: [
+      "Dodoma City",
+      "Bahi District",
+      "Chamwino District",
+      "Chemba District",
+      "Kondoa District",
+      "Kondoa Town",
+      "Kongwa District",
+      "Mpwapwa District"
+    ],
+    maeneo: [
+      "Dodoma",
+      "Bahi",
+      "Chamwino",
+      "Chemba",
+      "Kondoa",
+      "Kongwa",
+      "Mpwapwa",
+      "Mtera",
+      "Hombolo"
+    ]
+  },
+
+  "Geita": {
+    halmashauri: [
+      "Geita District",
+      "Geita Town",
+      "Bukombe District",
+      "Chato District",
+      "Mbogwe District",
+      "Nyang'hwale District"
+    ],
+    maeneo: [
+      "Geita",
+      "Chato",
+      "Ushirombo",
+      "Mbogwe",
+      "Nyang'hwale",
+      "Bukombe"
+    ]
+  },
+
+  "Iringa": {
+    halmashauri: [
+      "Iringa Municipal",
+      "Iringa District",
+      "Kilolo District",
+      "Mufindi District",
+      "Mafinga Town"
+    ],
+    maeneo: [
+      "Iringa",
+      "Mafinga",
+      "Kilolo",
+      "Mufindi",
+      "Ifwagi",
+      "Mgololo"
+    ]
+  },
+
+  "Kagera": {
+    halmashauri: [
+      "Bukoba Municipal",
+      "Bukoba District",
+      "Biharamulo District",
+      "Karagwe District",
+      "Kyerwa District",
+      "Missenyi District",
+      "Muleba District",
+      "Ngara District"
+    ],
+    maeneo: [
+      "Bukoba",
+      "Biharamulo",
+      "Ngara",
+      "Karagwe",
+      "Muleba",
+      "Kyerwa",
+      "Missenyi",
+      "Kabanga"
+    ]
+  },
+
+  "Katavi": {
+    halmashauri: [
+      "Mpanda Municipal",
+      "Mlele District",
+      "Mpimbwe District",
+      "Nsimbo District",
+      "Tanganyika District"
+    ],
+    maeneo: [
+      "Mpanda",
+      "Inyonga",
+      "Mpimbwe",
+      "Mlele",
+      "Nsimbo",
+      "Karema"
+    ]
+  },
+
+  "Kigoma": {
+    halmashauri: [
+      "Kigoma District",
+      "Kigoma/Ujiji Municipal",
+      "Kasulu District",
+      "Kasulu Town",
+      "Kibondo District",
+      "Kakonko District",
+      "Uvinza District",
+      "Buhigwe District"
+    ],
+    maeneo: [
+      "Kigoma",
+      "Ujiji",
+      "Kasulu",
+      "Kibondo",
+      "Kakonko",
+      "Uvinza",
+      "Buhigwe",
+      "Kibirizi"
+    ]
+  },
+
+  "Kilimanjaro": {
+    halmashauri: [
+      "Moshi Municipal",
+      "Moshi District",
+      "Hai District",
+      "Rombo District",
+      "Same District",
+      "Mwanga District",
+      "Siha District"
+    ],
+    maeneo: [
+      "Moshi",
+      "Himo",
+      "Hai",
+      "Rombo",
+      "Tarakea",
+      "Same",
+      "Mwanga",
+      "Sanya Juu",
+      "Machame"
+    ]
+  },
+
+  "Lindi": {
+    halmashauri: [
+      "Lindi Municipal",
+      "Lindi District",
+      "Kilwa District",
+      "Liwale District",
+      "Nachingwea District",
+      "Ruangwa District"
+    ],
+    maeneo: [
+      "Lindi",
+      "Kilwa Masoko",
+      "Kilwa Kivinje",
+      "Liwale",
+      "Nachingwea",
+      "Ruangwa",
+      "Mingoyo"
+    ]
+  },
+
+  "Manyara": {
+    halmashauri: [
+      "Babati Town",
+      "Babati District",
+      "Hanang District",
+      "Kiteto District",
+      "Mbulu District",
+      "Mbulu Town",
+      "Simanjiro District"
+    ],
+    maeneo: [
+      "Babati",
+      "Katesh",
+      "Mbulu",
+      "Kibaya",
+      "Orkesumet",
+      "Mirerani",
+      "Dareda"
+    ]
+  },
+
+  "Mara": {
+    halmashauri: [
+      "Musoma Municipal",
+      "Musoma District",
+      "Bunda District",
+      "Bunda Town",
+      "Butiama District",
+      "Rorya District",
+      "Serengeti District",
+      "Tarime District",
+      "Tarime Town"
+    ],
+    maeneo: [
+      "Musoma",
+      "Tarime",
+      "Bunda",
+      "Serengeti",
+      "Rorya",
+      "Butiama",
+      "Sirari",
+      "Mugumu"
+    ]
+  },
+
+  "Mbeya": {
+    halmashauri: [
+      "Mbeya City",
+      "Mbeya District",
+      "Busokelo District",
+      "Chunya District",
+      "Kyela District",
+      "Mbarali District",
+      "Rungwe District"
+    ],
+    maeneo: [
+      "Mbeya",
+      "Tukuyu",
+      "Mbalizi",
+      "Chunya",
+      "Kyela",
+      "Rujewa",
+      "Mlowo"
+    ]
+  },
+
+  "Morogoro": {
+    halmashauri: [
+      "Morogoro Municipal",
+      "Morogoro District",
+      "Gairo District",
+      "Kilosa District",
+      "Mlimba District",
+      "Ifakara Town",
+      "Mvomero District",
+      "Ulanga District",
+      "Malinyi District"
+    ],
+    maeneo: [
+      "Morogoro",
+      "Kilosa",
+      "Mikumi",
+      "Ifakara",
+      "Mahenge",
+      "Gairo",
+      "Mvomero",
+      "Malinyi",
+      "Mlimba"
+    ]
+  },
+
+  "Mtwara": {
+    halmashauri: [
+      "Mtwara Municipal",
+      "Mtwara District",
+      "Masasi District",
+      "Masasi Town",
+      "Newala District",
+      "Newala Town",
+      "Nanyamba Town",
+      "Tandahimba District"
+    ],
+    maeneo: [
+      "Mtwara",
+      "Mikindani",
+      "Masasi",
+      "Newala",
+      "Nanyamba",
+      "Tandahimba",
+      "Mingoyo"
+    ]
+  },
+
+  "Mwanza": {
+    halmashauri: [
+      "Nyamagana Municipal",
+      "Ilemela Municipal",
+      "Buchosa District",
+      "Magu District",
+      "Misungwi District",
+      "Sengerema District",
+      "Kwimba District",
+      "Ukerewe District"
+    ],
+    maeneo: [
+      "Mwanza",
+      "Nyamagana",
+      "Ilemela",
+      "Sengerema",
+      "Misungwi",
+      "Kwimba",
+      "Magu",
+      "Nansio",
+      "Kisesa"
+    ]
+  },
+
+  "Njombe": {
+    halmashauri: [
+      "Njombe Town",
+      "Njombe District",
+      "Makambako Town",
+      "Ludewa District",
+      "Makete District",
+      "Wanging'ombe District"
+    ],
+    maeneo: [
+      "Njombe",
+      "Makambako",
+      "Ludewa",
+      "Wanging'ombe",
+      "Makete",
+      "Ilembula",
+      "Lupembe"
+    ]
+  },
+
+  "Pwani": {
+    halmashauri: [
+      "Kibaha Town",
+      "Kibaha District",
+      "Bagamoyo District",
+      "Chalinze District",
+      "Kisarawe District",
+      "Mafia District",
+      "Mkuranga District",
+      "Rufiji District"
+    ],
+    maeneo: [
+      "Kibaha",
+      "Bagamoyo",
+      "Chalinze",
+      "Mlandizi",
+      "Kisarawe",
+      "Mkuranga",
+      "Utete",
+      "Mafia",
+      "Vikindu"
+    ]
+  },
+
+  "Rukwa": {
+    halmashauri: [
+      "Sumbawanga Municipal",
+      "Sumbawanga District",
+      "Kalambo District",
+      "Nkasi District"
+    ],
+    maeneo: [
+      "Sumbawanga",
+      "Namanyere",
+      "Laela",
+      "Kasanga",
+      "Matai",
+      "Kirando"
+    ]
+  },
+
+  "Ruvuma": {
+    halmashauri: [
+      "Songea Municipal",
+      "Songea District",
+      "Madaba District",
+      "Mbinga District",
+      "Namtumbo District",
+      "Nyasa District",
+      "Tunduru District"
+    ],
+    maeneo: [
+      "Songea",
+      "Mbinga",
+      "Tunduru",
+      "Namtumbo",
+      "Madaba",
+      "Mbambabay"
+    ]
+  },
+
+  "Shinyanga": {
+    halmashauri: [
+      "Shinyanga Municipal",
+      "Shinyanga District",
+      "Kahama Town",
+      "Kahama District",
+      "Kishapu District",
+      "Msalala District",
+      "Ushetu District"
+    ],
+    maeneo: [
+      "Shinyanga",
+      "Kahama",
+      "Tinde",
+      "Kishapu",
+      "Isaka",
+      "Mwadui"
+    ]
+  },
+
+  "Simiyu": {
+    halmashauri: [
+      "Bariadi Town",
+      "Bariadi District",
+      "Busega District",
+      "Itilima District",
+      "Maswa District",
+      "Meatu District"
+    ],
+    maeneo: [
+      "Bariadi",
+      "Maswa",
+      "Meatu",
+      "Busega",
+      "Itilima",
+      "Lalago",
+      "Mwandoya"
+    ]
+  },
+
+  "Singida": {
+    halmashauri: [
+      "Singida Municipal",
+      "Singida District",
+      "Ikungi District",
+      "Iramba District",
+      "Mkalama District",
+      "Manyoni District"
+    ],
+    maeneo: [
+      "Singida",
+      "Manyoni",
+      "Kiomboi",
+      "Shelui",
+      "Ikungi",
+      "Mkalama"
+    ]
+  },
+
+  "Songwe": {
+    halmashauri: [
+      "Tunduma Town",
+      "Mbozi District",
+      "Ileje District",
+      "Momba District",
+      "Songwe District"
+    ],
+    maeneo: [
+      "Vwawa",
+      "Tunduma",
+      "Mlowo",
+      "Ileje",
+      "Momba",
+      "Chitete"
+    ]
+  },
+
+  "Tabora": {
+    halmashauri: [
+      "Tabora Municipal",
+      "Tabora District",
+      "Igunga District",
+      "Kaliua District",
+      "Nzega District",
+      "Sikonge District",
+      "Urambo District",
+      "Uyui District"
+    ],
+    maeneo: [
+      "Tabora",
+      "Nzega",
+      "Igunga",
+      "Sikonge",
+      "Urambo",
+      "Kaliua",
+      "Uyui"
+    ]
+  },
+
+  "Tanga": {
+    halmashauri: [
+      "Tanga City",
+      "Handeni District",
+      "Handeni Town",
+      "Kilindi District",
+      "Korogwe District",
+      "Korogwe Town",
+      "Lushoto District",
+      "Mkinga District",
+      "Muheza District",
+      "Pangani District",
+      "Bumbuli District"
+    ],
+    maeneo: [
+      "Tanga",
+      "Korogwe",
+      "Muheza",
+      "Pangani",
+      "Handeni",
+      "Lushoto",
+      "Mkinga",
+      "Kilindi",
+      "Soni",
+      "Mombo"
+    ]
+  },
+
+  "Kaskazini Unguja": {
+    halmashauri: [
+      "North A District Council",
+      "North B District Council"
+    ],
+    maeneo: [
+      "Mkokotoni",
+      "Nungwi",
+      "Matemwe",
+      "Kendwa",
+      "Kiwengwa"
+    ]
+  },
+
+  "Kusini Unguja": {
+    halmashauri: [
+      "Central District Council",
+      "South District Council"
+    ],
+    maeneo: [
+      "Koani",
+      "Makunduchi",
+      "Jambiani",
+      "Paje",
+      "Bwejuu",
+      "Michamvi",
+      "Kizimkazi"
+    ]
+  },
+
+  "Mjini Magharibi": {
+    halmashauri: [
+      "Zanzibar City Council",
+      "West A Municipal Council",
+      "West B Municipal Council"
+    ],
+    maeneo: [
+      "Zanzibar Mjini",
+      "Stone Town",
+      "Mwanakwerekwe",
+      "Fuoni",
+      "Bububu",
+      "Kiembe Samaki",
+      "Chukwani"
+    ]
+  },
+
+  "Kaskazini Pemba": {
+    halmashauri: [
+      "Wete Town Council",
+      "Micheweni District Council"
+    ],
+    maeneo: [
+      "Wete",
+      "Micheweni",
+      "Koneni",
+      "Gando"
+    ]
+  },
+
+  "Kusini Pemba": {
+    halmashauri: [
+      "Chake Chake Town Council",
+      "Mkoani Town Council"
+    ],
+    maeneo: [
+      "Chake Chake",
+      "Mkoani",
+      "Wambaa",
+      "Kangani",
+      "Kengeja"
+    ]
+  }
+};
 function populateRegionSelect(selectId) {
   const select = document.getElementById(selectId);
+
+  if (!select) return;
 
   select.innerHTML = '<option value="">Chagua mkoa</option>';
 
@@ -2596,9 +3231,13 @@ function populateRegionSelect(selectId) {
   });
 }
 
-function updateTowns(regionId,townId) {
-  const region = document.getElementById(regionId).value;
+function updateTowns(regionId, townId) {
+  const regionSelect = document.getElementById(regionId);
   const townSelect = document.getElementById(townId);
+
+  if (!regionSelect || !townSelect) return;
+
+  const region = regionSelect.value;
 
   townSelect.innerHTML = '<option value="">Chagua mji</option>';
 
@@ -2612,17 +3251,27 @@ function updateTowns(regionId,townId) {
   });
 }
 
-document.getElementById("bookingRegion").addEventListener("change",() => {
-  updateTowns("bookingRegion","bookingTown");
-});
+const bookingRegion = document.getElementById("bookingRegion");
 
-document.getElementById("regionExplorer").addEventListener("change",() => {
-  updateTowns("regionExplorer","townExplorer");
+if (bookingRegion) {
+  bookingRegion.addEventListener("change", () => {
+    updateTowns("bookingRegion", "bookingTown");
+  });
+}
 
-  document.getElementById("regionInfo").textContent =
-    "Mkoa uliochaguliwa: " +
-    document.getElementById("regionExplorer").value;
-});
+const regionExplorer = document.getElementById("regionExplorer");
+
+if (regionExplorer) {
+  regionExplorer.addEventListener("change", () => {
+    updateTowns("regionExplorer", "townExplorer");
+
+    document.getElementById("regionInfo").textContent =
+      "Mkoa uliochaguliwa: " + regionExplorer.value;
+  });
+}
+
+populateRegionSelect("bookingRegion");
+populateRegionSelect("regionExplorer");
 
 // ========================================
 // 4. REFERENCE NUMBERS
