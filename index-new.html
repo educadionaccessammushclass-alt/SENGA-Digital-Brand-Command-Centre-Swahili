@@ -2547,101 +2547,78 @@ function populateRegionSelect(selectId) {
   });
 }
 
-// MAENEO YA ARUSHA
+// MIKOA NA MIJI / MAENEO YA HUDUMA
 const regionalLocations = {
-  "Arusha": {
-    "Arusha": [
-      "Arusha CBD",
-      "Sakina",
-      "Sokoine",
-      "Kaloleni",
-      "Sekei",
-      "Njiro",
-      "Moshono",
-      "Olasiti"
-    ],
-    "Meru": [
-      "Usa River",
-      "Tengeru",
-      "Nkoaranga",
-      "Maji ya Chai"
-    ],
-    "Karatu": [
-      "Karatu Town",
-      "Mto wa Mbu"
-    ],
-    "Monduli": [
-      "Monduli Town",
-      "Mbuyuni"
-    ],
-    "Longido": [
-      "Longido Town",
-      "Namanga"
-    ],
-    "Ngorongoro": [
-      "Loliondo",
-      "Wasso"
-    ]
-  }
+  "Arusha": [
+    "Arusha CBD",
+    "Sakina",
+    "Sokoine",
+    "Kaloleni",
+    "Sekei",
+    "Njiro",
+    "Moshono",
+    "Olasiti",
+    "Usa River",
+    "Tengeru",
+    "Nkoaranga",
+    "Maji ya Chai",
+    "Karatu",
+    "Mto wa Mbu",
+    "Monduli",
+    "Mbuyuni",
+    "Longido",
+    "Namanga",
+    "Loliondo",
+    "Wasso"
+  ]
 };
 
 function updateTowns(regionId, townId) {
-  const region = document.getElementById(regionId).value;
+  const regionSelect = document.getElementById(regionId);
   const townSelect = document.getElementById(townId);
 
-  townSelect.innerHTML = '<option value="">Chagua mji</option>';
+  if (!regionSelect || !townSelect) return;
 
-  const areaSelectId = townId + "Area";
-  const oldAreaSelect = document.getElementById(areaSelectId);
+  const selectedRegion = regionSelect.value;
 
-  if (oldAreaSelect) oldAreaSelect.remove();
+  townSelect.innerHTML = '<option value="">Chagua mji / eneo</option>';
 
-  if (!regions[region]) return;
+  const locations = regionalLocations[selectedRegion];
 
-  regions[region].forEach(town => {
-    const option = document.createElement("option");
-    option.value = town;
-    option.textContent = town;
-    townSelect.appendChild(option);
-  });
-
-  townSelect.onchange = function () {
-    const oldArea = document.getElementById(areaSelectId);
-    if (oldArea) oldArea.remove();
-
-    const areas = regionalLocations[region]?.[this.value];
-
-    if (!areas) return;
-
-    const areaSelect = document.createElement("select");
-    areaSelect.id = areaSelectId;
-    areaSelect.className = townSelect.className;
-
-    areaSelect.innerHTML =
-      '<option value="">Chagua eneo la huduma</option>';
-
-    areas.forEach(area => {
+  if (locations) {
+    locations.forEach(location => {
       const option = document.createElement("option");
-      option.value = area;
-      option.textContent = area;
-      areaSelect.appendChild(option);
+      option.value = location;
+      option.textContent = location;
+      townSelect.appendChild(option);
     });
-
-    townSelect.insertAdjacentElement("afterend", areaSelect);
-  };
+  }
 }
 
-document.getElementById("bookingRegion").addEventListener("change", () => {
-  updateTowns("bookingRegion", "bookingTown");
-});
+// BOOKING DROPDOWN
+const bookingRegion = document.getElementById("bookingRegion");
 
-document.getElementById("regionExplorer").addEventListener("change", () => {
-  updateTowns("regionExplorer", "townExplorer");
+if (bookingRegion) {
+  bookingRegion.addEventListener("change", function () {
+    updateTowns("bookingRegion", "bookingTown");
+  });
+}
 
-  document.getElementById("regionInfo").textContent =
-    "Mkoa uliochaguliwa: " +
-    document.getElementById("regionExplorer").value;
-});
+// REGIONAL EXPLORER DROPDOWN
+const regionExplorer = document.getElementById("regionExplorer");
+
+if (regionExplorer) {
+  regionExplorer.addEventListener("change", function () {
+    updateTowns("regionExplorer", "townExplorer");
+
+    const regionInfo = document.getElementById("regionInfo");
+
+    if (regionInfo) {
+      regionInfo.textContent =
+        "Mkoa uliochaguliwa: " + this.value;
+    }
+  });
+}
 // ========================================
 // 4. REFERENCE NUMBERS
 // ========================================
